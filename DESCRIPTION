@@ -11,8 +11,12 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
     aspe,
+    cli,
     dplyr,
+    furrr,
     magrittr,
+    progressr,
+    rmarkdown,
     stringr
 Remotes: 
   PascalIrz/aspe
