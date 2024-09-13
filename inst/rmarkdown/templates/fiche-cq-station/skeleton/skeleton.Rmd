@@ -10,7 +10,9 @@ output:
     css: 'ofb_theme_html.css'
 params:
   code_station: "03231000_013"
-  auteur: "Normandie"  
+  auteur: "DR Normandie"
+  annee_debut: 2010
+  annee_fin: 2022  
 ---
 
 ```{r setup, include=FALSE}
@@ -25,7 +27,28 @@ htmltools::img(src = knitr::image_uri('logo_OFB_v2.png'),
                style = 'position:absolute; top:0; right:0; padding:10px; width:180px;')
 ```
 
+
+> ⚠ **Important** :
+>
+> Les données ci-dessous couvrent la période de **`r params$annee_debut` à `r params$annee_fin`**, paramètres de filtres pour la génération de cette fiche.
+
 ## Résumé des opérations
+
+```{r}
+ope_list <-
+  get_liste_ope_station(df = aspe_table_fiches, 
+                      code_sta_pp = params$code_station) %>%
+  dplyr::select(-dept) %>% 
+  dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
+                  format(ope_date, "%Y") <= params$annee_fin)
+```
+
+Pour cette station, il y a **`r nrow(ope_list)` opération(s)** bancarisée(s) dans ASPE (entre l'année `r params$annee_debut` et l'année `r params$annee_fin`, paramètres de filtres). 
+
+```{r}
+ope_list %>% 
+  knitr::kable()
+```
 
 ## Objectifs et protocole de pêche
 

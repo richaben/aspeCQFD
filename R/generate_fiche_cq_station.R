@@ -3,6 +3,8 @@
 #' @param stations un vecteur de code de station
 #' @param dossier_sortie le dossier de sortie des fiches html
 #' @param auteur le nom de l'auteur de la fiche
+#' @param annee_debut l'année de début des données
+#' @param annee_fin l'année de fin des données
 #'
 #' @return un ou des fichiers html dans le dossier de sortie spécifié
 #' @export
@@ -22,7 +24,9 @@
 
 generate_fiche_cq_station <- function(stations,
                                       dossier_sortie = getwd(),
-                                      auteur){
+                                      auteur,
+                                      annee_debut,
+                                      annee_fin){
   
   cli::cli_alert_info("Cr\u00e9ation des fiches CQ stations")
   
@@ -41,7 +45,9 @@ generate_fiche_cq_station <- function(stations,
                          output_dir = dossier_sortie,
                          quiet = TRUE,
                          params=list(code_station = .x,
-                                     auteur = auteur))
+                                     auteur = auteur,
+                                     annee_debut = annee_debut,
+                                     annee_fin = annee_fin))
                          
                        }
     )

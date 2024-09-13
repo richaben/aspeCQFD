@@ -6,7 +6,7 @@
 #' @return un dataframe avec la liste des opérations pour la station
 #' @export
 #' 
-#' @importFrom dplyr filter select arrange
+#' @importFrom dplyr filter select arrange mutate
 #' 
 #' @examples
 #' \dontrun{
@@ -24,6 +24,7 @@ get_liste_ope_station <- function(df, code_sta_pp)
   df %>%
     dplyr::filter(code_sta_pp %in% {{code_sta_pp}}) %>%
     dplyr::select(code_sta_pp, ope_id, ope_date, operateur_peche, ope_eta_id, dept) %>% 
-    dplyr::arrange(dept, code_sta_pp) %>% 
+    dplyr::mutate(ope_date = as.Date(ope_date, format = "%Y-%m-%d")) %>% 
+    dplyr::arrange(dept, code_sta_pp, ope_date) %>% 
     unique()
 }

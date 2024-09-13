@@ -4,7 +4,13 @@
 \alias{generate_fiche_cq_station}
 \title{Générer une fiche de Contrôle Qualité des données pour une station}
 \usage{
-generate_fiche_cq_station(stations, dossier_sortie = getwd(), auteur)
+generate_fiche_cq_station(
+  stations,
+  dossier_sortie = getwd(),
+  auteur,
+  annee_debut,
+  annee_fin
+)
 }
 \arguments{
 \item{stations}{un vecteur de code de station}
@@ -12,6 +18,10 @@ generate_fiche_cq_station(stations, dossier_sortie = getwd(), auteur)
 \item{dossier_sortie}{le dossier de sortie des fiches html}
 
 \item{auteur}{le nom de l'auteur de la fiche}
+
+\item{annee_debut}{l'année de début des données}
+
+\item{annee_fin}{l'année de fin des données}
 }
 \value{
 un ou des fichiers html dans le dossier de sortie spécifié
