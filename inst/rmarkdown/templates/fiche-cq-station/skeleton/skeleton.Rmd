@@ -50,6 +50,13 @@ ope_list %>%
   knitr::kable()
 ```
 
+### Jours de pêche
+
+```{r, fig.width=8, fig.height=4}
+ope_list %>% 
+ plot_jour_peche()
+```
+
 ## Objectifs et protocole de pêche
 
 ## Mise en oeuvre de la pêche

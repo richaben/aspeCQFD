@@ -27,7 +27,7 @@ generate_fiche_cq_station <- function(stations,
                                       auteur,
                                       annee_debut,
                                       annee_fin){
-  
+  options(future.rng.onMisuse = "ignore")
   cli::cli_alert_info("Cr\u00e9ation des fiches CQ stations")
   
   progressr::with_progress({
@@ -35,6 +35,7 @@ generate_fiche_cq_station <- function(stations,
     p <- progressr::progressor(steps = length(stations))
     
     furrr::future_walk(stations,
+                       
                        ~ {
                          p()
                          rmarkdown::render(input = system.file(
