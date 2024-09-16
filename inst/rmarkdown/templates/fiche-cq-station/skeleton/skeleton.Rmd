@@ -61,14 +61,19 @@ ope_list %>%
 
 ## Objectifs et protocole de pêche
 
-> Mettre graph1 réseau
-
-```{r, fig.width=9, fig.height=4}
+```{r, fig.width=11, fig.height=4}
 aspe_table_fiches %>% 
   dplyr::filter(code_sta_pp == params$code_station) %>% 
   plot_objectif_reseau()
 ```
 
+```{r, fig.width=11, fig.height=6}
+aspe_table_fiches %>% 
+  dplyr::filter(code_sta_pp == params$code_station) %>% 
+  mef_ajouter_infos_context() %>% 
+  unique() %>% 
+  plot_infos_context()
+```
 
 > Mettre graph2 info contextuelle
 
