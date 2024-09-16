@@ -1,4 +1,4 @@
-#' Plot jours de pêche
+#' Plot jours de pêche pour une station ou plusieurs
 #'
 #' @param df un dataframe issu de la fonction [aspeCQFD::get_liste_ope_station()]
 #' @param jour_julien un booléen pour afficher les jours de l'année et code couleur saison,

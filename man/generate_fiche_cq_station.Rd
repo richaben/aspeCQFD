@@ -6,6 +6,7 @@
 \usage{
 generate_fiche_cq_station(
   stations,
+  df_data,
   dossier_sortie = getwd(),
   auteur,
   annee_debut,
@@ -14,6 +15,8 @@ generate_fiche_cq_station(
 }
 \arguments{
 \item{stations}{un vecteur de code de station}
+
+\item{df_data}{un dataframe avec les données nécessaires pour la fiche}
 
 \item{dossier_sortie}{le dossier de sortie des fiches html}
 

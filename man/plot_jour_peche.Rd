@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_jour_peche.R
 \name{plot_jour_peche}
 \alias{plot_jour_peche}
-\title{Plot jours de pêche}
+\title{Plot jours de pêche pour une station ou plusieurs}
 \usage{
 plot_jour_peche(df, jour_julien = F)
 }
@@ -16,7 +16,7 @@ par défaut \code{FALSE}}
 un graphique ggplot2
 }
 \description{
-Plot jours de pêche
+Plot jours de pêche pour une station ou plusieurs
 }
 \examples{
 \dontrun{

@@ -16,11 +16,13 @@ Imports:
     furrr,
     ggplot2,
     ggrepel,
+    ggtext,
     glue,
     lubridate,
     magrittr,
     progressr,
     rmarkdown,
-    stringr
+    stringr,
+    tidyr
 Remotes: 
   PascalIrz/aspe

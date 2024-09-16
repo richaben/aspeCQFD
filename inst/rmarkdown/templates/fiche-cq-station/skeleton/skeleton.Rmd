@@ -1,6 +1,7 @@
 ---
 title: "Fiche CQ données ASPE - Station `r params$code_station`"
 author: "`r params$auteur`"
+subtitle: "`r unique(df_data[df_data$code_sta_pp %in% params$code_station,]$sta_libelle_sandre)`"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output: 
   html_document :
@@ -9,6 +10,7 @@ output:
     toc: false
     css: 'ofb_theme_html.css'
 params:
+  df_data: NULL
   code_station: "03231000_013"
   auteur: "DR Normandie"
   annee_debut: 2010
@@ -58,6 +60,17 @@ ope_list %>%
 ```
 
 ## Objectifs et protocole de pêche
+
+> Mettre graph1 réseau
+
+```{r, fig.width=9, fig.height=4}
+aspe_table_fiches %>% 
+  dplyr::filter(code_sta_pp == params$code_station) %>% 
+  plot_objectif_reseau()
+```
+
+
+> Mettre graph2 info contextuelle
 
 ## Mise en oeuvre de la pêche
 ### Description pêche

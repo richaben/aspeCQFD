@@ -1,6 +1,7 @@
 #' Générer une fiche de Contrôle Qualité des données pour une station
 #'
 #' @param stations un vecteur de code de station
+#' @param df_data un dataframe avec les données nécessaires pour la fiche
 #' @param dossier_sortie le dossier de sortie des fiches html
 #' @param auteur le nom de l'auteur de la fiche
 #' @param annee_debut l'année de début des données
@@ -23,6 +24,7 @@
 #' 
 
 generate_fiche_cq_station <- function(stations,
+                                      df_data,
                                       dossier_sortie = getwd(),
                                       auteur,
                                       annee_debut,
