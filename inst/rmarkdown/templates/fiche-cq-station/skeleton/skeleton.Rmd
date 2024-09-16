@@ -43,6 +43,12 @@ ope_list <-
   dplyr::select(-dept) %>% 
   dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
                   format(ope_date, "%Y") <= params$annee_fin)
+
+df_station <-
+  aspe_table_fiches %>% 
+  dplyr::filter(code_sta_pp == params$code_station) %>% 
+  dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
+                  format(ope_date, "%Y") <= params$annee_fin)
 ```
 
 Pour cette station, il y a **`r nrow(ope_list)` opération(s)** bancarisée(s) dans ASPE (entre l'année `r params$annee_debut` et l'année `r params$annee_fin`, paramètres de filtres). 
@@ -54,7 +60,7 @@ ope_list %>%
 
 ### Jours de pêche
 
-```{r, fig.width=8, fig.height=4}
+```{r, fig.width=7, fig.height=4}
 ope_list %>% 
  plot_jour_peche()
 ```
@@ -62,23 +68,30 @@ ope_list %>%
 ## Objectifs et protocole de pêche
 
 ```{r, fig.width=11, fig.height=4}
-aspe_table_fiches %>% 
-  dplyr::filter(code_sta_pp == params$code_station) %>% 
+df_station %>% 
   plot_objectif_reseau()
 ```
 
 ```{r, fig.width=11, fig.height=6}
-aspe_table_fiches %>% 
-  dplyr::filter(code_sta_pp == params$code_station) %>% 
+df_station %>% 
+  dplyr::select(code_sta_pp, sta_libelle_sandre, ope_id, annee) %>% 
   mef_ajouter_infos_context() %>% 
   unique() %>% 
   plot_infos_context()
 ```
 
-> Mettre graph2 info contextuelle
 
 ## Mise en oeuvre de la pêche
 ### Description pêche
+
+```{r, fig.width=11, fig.height=6}
+df_tab_protocole_pts <-
+  df_station %>% 
+  mef_tab_protocole_pts()
+
+df_tab_protocole_pts %>% 
+  plot_proto_prospec_passage()
+```
 
 ### Descriptions pêche et environnement
 

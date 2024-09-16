@@ -20,6 +20,7 @@ Imports:
     glue,
     lubridate,
     magrittr,
+    patchwork,
     progressr,
     rmarkdown,
     stringr,
