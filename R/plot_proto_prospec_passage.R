@@ -118,8 +118,8 @@ plot_proto_prospec_passage <- function(df){
           ggplot2::geom_point(col='black',size=4, show.legend = F) +
           ggplot2::ylab(NULL) +
           ggplot2::xlab(NULL) +
-          #scale_x_continuous(breaks = seq(min(.$annee), max(.$annee), by = 1)) +
           ggplot2::theme_bw() +
+          ggplot2::scale_x_continuous(breaks = unique(df$annee)) +
           ggplot2::scale_shape_manual(values = c(21,23,24)) +
           ggplot2::theme(axis.text.y = ggplot2::element_text(face = 'bold',size=10),
                 title = ggplot2::element_text(face = 'bold', size=9),

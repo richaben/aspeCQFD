@@ -95,13 +95,26 @@ df_tab_protocole_pts %>%
 
 ### Descriptions pêche et environnement
 
+```{r, fig.width= 11, fig.height=10}
+df_station %>% 
+  plot_descript_peche_env()
+```
+
+
 ## Données environnementales
 ### faciès
 ### habitat
 
+
 ## Saisies piscicoles
 ### Le cortège d'espèces
 
+> graph cortège especes
+
 ### L'indice poisson rivière (IPR)
 
+> graphs presence note + evolution note
+
 ### Commentaires
+
+> tableau

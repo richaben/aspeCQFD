@@ -40,6 +40,18 @@ mef_creer_table_fiches <- function() {
     dplyr::left_join(y = operation_description_peche %>%
                        dplyr::rename(ope_id = odp_ope_id, 
                                      mop_id = odp_mop_id)) %>%
+    
+    dplyr::mutate(odp_ted_id = dplyr::recode(odp_ted_id, 
+                                             !!!setNames(ref_tendance_debit$ted_libelle,
+                                                         ref_tendance_debit$ted_id)),
+                  odp_tur_id = dplyr::recode(odp_tur_id, 
+                                             !!!setNames(ref_turbidite$tur_libelle,
+                                                         ref_turbidite$tur_id)),
+                  odp_coh_id = dplyr::recode(odp_coh_id, 
+                                             !!!setNames(ref_condition_hydrologique$coh_libelle,
+                                                         ref_condition_hydrologique$coh_id))) %>%  
+    
+    
     dplyr::left_join(y = ref_moyen_prospection %>%
                        dplyr::select(mop_id, mop_libelle)) %>% 
     dplyr::select(-mop_id) %>% 
