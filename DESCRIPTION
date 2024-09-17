@@ -23,6 +23,7 @@ Imports:
     magrittr,
     patchwork,
     progressr,
+    RColorBrewer,
     rmarkdown,
     stringr,
     tidyr

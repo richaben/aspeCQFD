@@ -95,7 +95,7 @@ plot_facies_data <- function(df){
                             col='black',
                             stroke = 1.5, 
                             show.legend =  F) +
-        ggplot2::geom_label(aes(label = stringr::str_wrap(value, 10), fill= value), 
+        ggplot2::geom_label(aes(label = stringr::str_wrap(value, 20), fill= value), 
                             alpha=0.5, 
                             show.legend = F, 
                             size=2.3) +

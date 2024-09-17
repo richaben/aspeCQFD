@@ -1,0 +1,15 @@
+#' Fonction pour afficher des valeurs entières pour une variable
+#'
+#' @noRd
+#' 
+#' @param n nombre de breaks souhaité
+#' @param ... 
+#'
+integer_breaks <- function(n = 5, ...) {
+  fxn <- function(x) {
+    breaks <- floor(pretty(x, n, ...))
+    names(breaks) <- attr(breaks, "labels")
+    breaks
+  }
+  return(fxn)
+}
