@@ -103,7 +103,19 @@ df_station %>%
 
 ## Données environnementales
 ### faciès
+
+```{r, fig.width= 11, fig.height=11}
+df_station %>% 
+  plot_facies_data()
+```
+
 ### habitat
+
+> graph habitat
+
+```{r, fig.width=11, fig.height=9}
+
+```
 
 
 ## Saisies piscicoles

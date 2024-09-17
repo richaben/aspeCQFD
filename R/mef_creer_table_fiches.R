@@ -80,5 +80,8 @@ mef_creer_table_fiches <- function() {
                   ope_niq_id = dplyr::recode(ope_niq_id, 
                                              !!!setNames(ref_niveau_qualification$niq_libelle, ref_niveau_qualification$niq_id))) %>% 
     
+    # ajout facies
+    mef_ajouter_facies() %>% 
+    
     dplyr::as_tibble()
 }

@@ -13,6 +13,7 @@ Imports:
     aspe,
     cli,
     dplyr,
+    forcats,
     furrr,
     ggplot2,
     ggrepel,
