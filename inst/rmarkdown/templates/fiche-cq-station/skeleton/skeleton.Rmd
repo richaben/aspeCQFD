@@ -109,6 +109,7 @@ df_station %>%
 
 ```{r, fig.width=12, fig.height=10}
 df_station %>% 
+  mef_ajouter_facies() %>% 
   plot_facies_data()
 ```
 

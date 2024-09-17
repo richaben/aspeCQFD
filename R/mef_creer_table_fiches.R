@@ -74,14 +74,12 @@ mef_creer_table_fiches <- function() {
     
     # ajout surface
     dplyr::left_join(operation %>% 
-                       dplyr::select(ope_id, ope_surface_calculee, ope_eta_id, ope_niq_id)) %>%
+                       dplyr::select(ope_id, ope_surface_calculee, ope_eta_id, ope_niq_id, 
+                                     ope_commentaire)) %>%
     dplyr::mutate(ope_eta_id = dplyr::recode(ope_eta_id, 
                                              !!!setNames(ref_etat_avancement$eta_libelle, ref_etat_avancement$eta_id)),
                   ope_niq_id = dplyr::recode(ope_niq_id, 
                                              !!!setNames(ref_niveau_qualification$niq_libelle, ref_niveau_qualification$niq_id))) %>% 
-    
-    # ajout facies
-    mef_ajouter_facies() %>% 
     
     dplyr::as_tibble()
 }
