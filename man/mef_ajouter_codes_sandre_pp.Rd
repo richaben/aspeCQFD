@@ -20,7 +20,7 @@ Ajoute à un dataframe aspe les codes SANDRE et points de prélèvement
 \dontrun{
 df <- 
   aspe::mef_creer_passerelle() \%>\% 
-  mef_ajouter_codes_sandre_pp(df)
+  mef_ajouter_codes_sandre_pp()
 }
- 
+
 }

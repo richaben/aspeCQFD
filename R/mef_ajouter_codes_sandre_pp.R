@@ -13,10 +13,9 @@
 #'\dontrun{
 #' df <- 
 #'   aspe::mef_creer_passerelle() %>% 
-#'   mef_ajouter_codes_sandre_pp(df)
+#'   mef_ajouter_codes_sandre_pp()
 #' }
-#'  
-
+#'
 mef_ajouter_codes_sandre_pp <- function(df)
   
 {

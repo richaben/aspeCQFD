@@ -30,9 +30,12 @@ htmltools::img(src = knitr::image_uri('logo_OFB_v2.png'),
 ```
 
 
-> ⚠ **Important** :
+> ⚠ **Important / Préambule** :<br><br>
+> 
+> Les données couvrent la période de **`r params$annee_debut` à `r params$annee_fin`** (paramètres de filtres pour la génération de cette fiche). <br>
+> <br>
+> Les graphiques présentés ci-dessous ont pour vocation principale à la mise en qualité des données (et pas vraiment à l'analyse des variations sur les variables bancarisées). Les graphiques, confrontés entre eux, permettent de détecter d'éventuelles erreurs ou problèmes de cohérence dans les données. <br> 
 >
-> Les données ci-dessous couvrent la période de **`r params$annee_debut` à `r params$annee_fin`**, paramètres de filtres pour la génération de cette fiche.
 
 ## Résumé des opérations
 
@@ -104,17 +107,16 @@ df_station %>%
 ## Données environnementales
 ### faciès
 
-```{r, fig.width= 11, fig.height=11}
+```{r, fig.width=12, fig.height=10}
 df_station %>% 
   plot_facies_data()
 ```
 
 ### habitat
 
-> graph habitat
-
-```{r, fig.width=11, fig.height=9}
-
+```{r, fig.width=12, fig.height=10}
+df_station %>% 
+  plot_habitat_data()
 ```
 
 
