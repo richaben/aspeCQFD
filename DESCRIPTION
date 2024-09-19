@@ -29,3 +29,6 @@ Imports:
     tidyr
 Remotes: 
   PascalIrz/aspe
+Suggests: 
+    knitr
+VignetteBuilder: knitr

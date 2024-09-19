@@ -1,0 +1,26 @@
+---
+title: "Comment créer une fiche CQ pour une station ?"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{creation-fiche-cq}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(aspeCQFD)
+```
+
+
+## Prérequis
+
+> Données ASPE
+> Constituer 3 tableaux de données
+
