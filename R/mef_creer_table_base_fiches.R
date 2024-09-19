@@ -43,6 +43,9 @@ mef_creer_table_base_fiches <- function() {
     # ajout infos operation
     mef_ajouter_infos_context() %>% 
     
+    # ajout protocole
+    aspe::mef_ajouter_type_protocole() %>% 
+    
     # format tibble
     dplyr::as_tibble()
   

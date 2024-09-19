@@ -24,13 +24,14 @@ plot_descript_peche_env <- function(df){
   plot1a <-
    df %>% 
     dplyr::select(code_sta_pp, 
-                   sta_libelle_sandre, 
-                   ope_id, annee,
-                   pre_id,
-                   odp_longueur,
-                   odp_largeur_lame_eau,
-                   profondeur,
-                   ope_surface_calculee) %>% 
+                  sta_libelle_sandre, 
+                  ope_id, 
+                  annee,
+                  pre_id,
+                  odp_longueur,
+                  odp_largeur_lame_eau,
+                  profondeur,
+                  ope_surface_calculee) %>% 
     plot_completude_valeur()
   
   # plot2_inspection_valeurs

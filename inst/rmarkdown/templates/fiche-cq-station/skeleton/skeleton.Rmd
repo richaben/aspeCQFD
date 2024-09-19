@@ -15,6 +15,8 @@ params:
   auteur: "DR Normandie"
   annee_debut: 2010
   annee_fin: 2022  
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -107,16 +109,16 @@ df_station %>%
 ### faciès
 
 ```{r, fig.width=12, fig.height=10}
-df_station %>% 
-  mef_ajouter_facies() %>% 
-  plot_facies_data()
+# df_station %>% 
+#   mef_ajouter_facies() %>% 
+#   plot_facies_data()
 ```
 
 ### habitat
 
 ```{r, fig.width=12, fig.height=8.5}
-df_station %>% 
-  plot_habitat_data()
+# df_station %>% 
+#   plot_habitat_data()
 ```
 
 
@@ -124,8 +126,8 @@ df_station %>%
 ### Le cortège d'espèces
 
 ```{r, fig.height=7.5, fig.width=12}
-df_station %>% 
-  plot_peuplement_data()
+# df_station %>% 
+#   plot_peuplement_data()
 ```
 
 ### L'indice poisson rivière (IPR)

@@ -24,6 +24,23 @@
 
 plot_proto_prospec_passage <- function(df){
   
+  
+  df <- df %>% 
+    dplyr::select(code_sta_pp, 
+                  sta_libelle_sandre, 
+                  ope_id, annee, 
+                  pro_libelle, 
+                  mop_libelle, 
+                  tpe_libelle, 
+                  grp_tgp_id, 
+                  grp_nombre, 
+                  pas_numero) %>%
+    dplyr::mutate(grp_tgp_id = dplyr::recode(grp_tgp_id, 
+                                             !!!setNames(ref_type_groupe_points$tgp_libelle,
+                                                         ref_type_groupe_points$tgp_id)),
+                  grp_tgp_id = stringr::str_wrap(grp_tgp_id,12)) %>% 
+    dplyr::distinct()
+  
   if(stringr::str_detect(toString(unique(df$pro_libelle)), 'par points') == TRUE){
   
     df_part1 <-
@@ -35,6 +52,7 @@ plot_proto_prospec_passage <- function(df){
                     pro_libelle,
                     mop_libelle, 
                     pas_numero) %>% 
+      unique() %>% 
       dplyr::group_by(code_sta_pp, 
                       sta_libelle_sandre, 
                       ope_id, 
@@ -58,7 +76,9 @@ plot_proto_prospec_passage <- function(df){
       ggplot2::geom_point(col='black',size=4, show.legend = F) +
       ggplot2::ylab(NULL) +
       ggplot2::xlab(NULL) +
-      ggplot2::scale_x_continuous(breaks = unique(df_part1$annee)
+      ggplot2::scale_x_continuous(breaks = unique(df_part1$annee),
+                                  limits = c(min(df_part1$annee)-1,
+                                             max(df_part1$annee)+1)
       ) +
       ggplot2::theme_bw() +
       ggplot2::scale_shape_manual(values = c(21, 23, 24, 25)) +
@@ -74,11 +94,15 @@ plot_proto_prospec_passage <- function(df){
     
     part2 <-
       df %>% 
+      dplyr::filter(!is.na(grp_tgp_id)) %>%
       ggplot2::ggplot(.,  aes(x = annee, y = grp_nombre, fill= grp_tgp_id)) +
-          ggplot2::geom_bar(stat="identity", width = 0.75, col='black', linewidth = 0.2, alpha = 0.8) +
+          ggplot2::geom_bar(stat="identity", width = 0.5, col='black', linewidth = 0.2, alpha = 0.8) +
           ggplot2::ylab(NULL) +
           ggplot2::xlab("Ann\u00e9es") + 
-          ggplot2::scale_x_continuous(breaks = unique(df$annee)) +
+          ggplot2::scale_x_continuous(breaks = unique(df$annee),
+                                      limits = c(min(df_part1$annee)-1,
+                                                 max(df_part1$annee)+1)
+                                      ) +
           ggplot2::theme_bw() +
           ggplot2::scale_fill_manual(values=c('#4ECDC4','#999999')) +
           ggplot2::theme(legend.title=ggplot2::element_blank(),
@@ -122,8 +146,11 @@ plot_proto_prospec_passage <- function(df){
           ggplot2::ylab(NULL) +
           ggplot2::xlab(NULL) +
           ggplot2::theme_bw() +
-          ggplot2::scale_x_continuous(breaks = unique(df$annee)) +
-          ggplot2::scale_shape_manual(values = c(21,23,24)) +
+          ggplot2::scale_x_continuous(breaks = unique(df$annee),
+                                      limits = c(min(df$annee)-1,
+                                                 max(df$annee)+1)
+                                      ) +
+          ggplot2::scale_shape_manual(values = c(21, 23, 24)) +
           ggplot2::theme(axis.text.y = ggplot2::element_text(face = 'bold',size=10),
                 title = ggplot2::element_text(face = 'bold', size=9),
                 axis.text.x = ggplot2::element_text(angle = 45, hjust=1),
