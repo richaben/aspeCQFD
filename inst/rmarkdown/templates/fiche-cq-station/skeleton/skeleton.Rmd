@@ -57,6 +57,7 @@ Pour cette station, il y a **`r nrow(ope_list)` opération(s)** bancarisée(s) d
 
 ```{r}
 ope_list %>% 
+  dplyr::select(-ope_commentaire) %>% 
   knitr::kable()
 ```
 
@@ -76,12 +77,11 @@ df_station %>%
 
 ```{r, fig.width=11, fig.height=6}
 df_station %>% 
-  dplyr::select(code_sta_pp, sta_libelle_sandre, ope_id, annee) %>% 
-  mef_ajouter_infos_context() %>% 
-  unique() %>% 
+  select_infos_context() %>% 
   plot_infos_context()
 ```
 
+>>
 
 ## Mise en oeuvre de la pêche
 ### Description pêche
@@ -147,10 +147,9 @@ df_station %>%
 ### Commentaires
 
 ```{r}
-df_station %>% 
+ope_list %>% 
   dplyr::select(ope_id, ope_date, ope_commentaire) %>% 
   unique() %>% 
-  dplyr::mutate(ope_date = as.Date(ope_date, format = "%Y-%m-%d")) %>%
   knitr::kable()
 ```
 

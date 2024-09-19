@@ -22,5 +22,9 @@ library(aspeCQFD)
 ## Prérequis
 
 > Données ASPE
-> Constituer 3 tableaux de données
+
+> Constituer 3 tableaux de données + sauvegarder dans l'environnement
+
+
+## Choisir une station
 

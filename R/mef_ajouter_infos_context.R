@@ -1,4 +1,4 @@
-#' Ajoute les informations contextuelles issues de ASPE
+#' Ajoute les informations contextuelles pour les opérations issues de ASPE
 #'
 #' @param df un dataframe aspe issu de la fonction [aspeCQFD::mef_creer_table_fiches()]
 #'
@@ -31,6 +31,10 @@ mef_ajouter_infos_context <- function(df){
     dplyr::left_join(operation %>% 
                        dplyr::select(ope_id,
                                      #ope_date,
+                                     ope_surface_calculee, 
+                                     ope_eta_id, 
+                                     ope_niq_id, 
+                                     ope_commentaire,
                                      ope_pente_ligne_eau,
                                      ope_section_mouillee,
                                      ope_durete_totale,
@@ -42,6 +46,12 @@ mef_ajouter_infos_context <- function(df){
                                      ope_amplitude_thermique_air_station_cerema,
                                      ope_temperature_air_station_cerema,
                                      ope_espece_ciblee)) %>% 
-    dplyr::mutate(ope_cap_id = dplyr::recode(ope_cap_id, !!! categ_recode))
+    dplyr::mutate(ope_cap_id = dplyr::recode(ope_cap_id, !!! categ_recode)) %>% 
+    dplyr::mutate(ope_eta_id = dplyr::recode(ope_eta_id, 
+                                             !!!setNames(ref_etat_avancement$eta_libelle, 
+                                                         ref_etat_avancement$eta_id)),
+                  ope_niq_id = dplyr::recode(ope_niq_id, 
+                                             !!!setNames(ref_niveau_qualification$niq_libelle, 
+                                                         ref_niveau_qualification$niq_id)))
   
 }

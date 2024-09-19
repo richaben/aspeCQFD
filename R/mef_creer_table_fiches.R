@@ -1,5 +1,10 @@
 #' Création d'un tableau de données ASPE pour les fiches de pêche
 #'
+#' @description
+#' La fonction permet de constituer un tableau de base nécessaire pour la création des fiches.
+#' Les données ASPE doivent être chargées dans l'environnement au préalable.
+#' Seules les stations appartenant aux réseaux RCS, RHP et RRP sont conservées. 
+#' 
 #' @return un dataframe avec les informations utiles
 #' @export
 #' 

@@ -23,7 +23,13 @@ get_liste_ope_station <- function(df, code_sta_pp)
 {
   df %>%
     dplyr::filter(code_sta_pp %in% {{code_sta_pp}}) %>%
-    dplyr::select(code_sta_pp, ope_id, ope_date, operateur_peche, ope_eta_id, dept) %>% 
+    dplyr::select(code_sta_pp, 
+                  ope_id, 
+                  ope_date, 
+                  operateur_peche, 
+                  ope_eta_id, 
+                  ope_commentaire,
+                  dept) %>% 
     dplyr::mutate(ope_date = as.Date(ope_date, format = "%Y-%m-%d")) %>% 
     dplyr::arrange(dept, code_sta_pp, ope_date) %>% 
     unique()

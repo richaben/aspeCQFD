@@ -2,7 +2,7 @@
 % Please edit documentation in R/mef_ajouter_infos_context.R
 \name{mef_ajouter_infos_context}
 \alias{mef_ajouter_infos_context}
-\title{Ajoute les informations contextuelles issues de ASPE}
+\title{Ajoute les informations contextuelles pour les opérations issues de ASPE}
 \usage{
 mef_ajouter_infos_context(df)
 }
@@ -13,7 +13,7 @@ mef_ajouter_infos_context(df)
 un dataframe avec les infos contextuelles sur les opérations de pêche
 }
 \description{
-Ajoute les informations contextuelles issues de ASPE
+Ajoute les informations contextuelles pour les opérations issues de ASPE
 }
 \examples{
 \dontrun{
