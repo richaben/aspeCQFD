@@ -50,8 +50,8 @@ plot_habitat_data <- function(df){
         ggplot2::scale_x_date(date_breaks = "1 year", 
                               date_minor_breaks = "1 year",
                               date_labels = "%Y",
-                              limits = c(min(df$ope_date),
-                                         max(df$ope_date)+100)) +
+                              limits = c(min(df$ope_date)-120,
+                                         max(df$ope_date)+120)) +
         ggplot2::theme_bw() +
         ggplot2::theme(
           axis.text.y = ggplot2::element_text(face = 'bold',size=9),

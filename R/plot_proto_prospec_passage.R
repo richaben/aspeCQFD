@@ -87,8 +87,8 @@ plot_proto_prospec_passage <- function(df){
       ggplot2::scale_x_date(date_breaks = "1 year", 
                             date_minor_breaks = "1 year",
                             date_labels = "%Y",
-                            limits = c(min(df$ope_date),
-                                       max(df$ope_date)+100)
+                            limits = c(min(df$ope_date)-120,
+                                       max(df$ope_date)+120)
       ) + 
       ggplot2::theme_bw() +
       ggplot2::scale_shape_manual(values = c(21, 23, 24, 25)) +
@@ -116,8 +116,8 @@ plot_proto_prospec_passage <- function(df){
       ggplot2::scale_x_date(date_breaks = "1 year", 
                             date_minor_breaks = "1 year",
                             date_labels = "%Y",
-                            limits = c(min(df$ope_date),
-                                       max(df$ope_date)+100)
+                            limits = c(min(df$ope_date)-120,
+                                       max(df$ope_date)+120)
       ) + 
       
           ggplot2::theme_bw() +
@@ -172,8 +172,8 @@ plot_proto_prospec_passage <- function(df){
           ggplot2::scale_x_date(date_breaks = "1 year", 
                                 date_minor_breaks = "1 year",
                                 date_labels = "%Y",
-                                limits = c(min(df$ope_date),
-                                           max(df$ope_date)+100)
+                                limits = c(min(df$ope_date)-120,
+                                           max(df$ope_date)+120)
           ) + 
           ggplot2::scale_shape_manual(values = c(21, 23, 24)) +
           ggplot2::theme(axis.text.y = ggplot2::element_text(face = 'bold',size=10),

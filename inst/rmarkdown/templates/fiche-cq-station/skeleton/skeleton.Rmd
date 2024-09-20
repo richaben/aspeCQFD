@@ -126,8 +126,8 @@ df_station_ope_env %>%
 ### Le cortège d'espèces
 
 ```{r, fig.height=7.5, fig.width=12}
-# df_station %>% 
-#   plot_peuplement_data()
+df_station %>%
+  plot_peuplement_data()
 ```
 
 ### L'indice poisson rivière (IPR)

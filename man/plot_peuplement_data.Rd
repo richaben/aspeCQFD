@@ -7,7 +7,7 @@
 plot_peuplement_data(df)
 }
 \arguments{
-\item{df}{un dataframe aspe issu de la fonction \code{\link[=mef_tab_peuplement]{mef_tab_peuplement()}}}
+\item{df}{un dataframe aspe issu de la fonction \code{\link[=mef_creer_table_peuplement]{mef_creer_table_peuplement()}}}
 }
 \value{
 un graphique ggplot2 représentant le nombre d'individus par espèce, par année et type de points
@@ -17,7 +17,7 @@ Plot du graphique du peuplement par espèce et par année pour une station
 }
 \examples{
 \dontrun{
-aspe_table_fiches \%>\%
+aspe_table_fiches_peuplement \%>\%
   dplyr::filter(code_sta_pp == "03231000_013") \%>\% 
   plot_peuplement_data()
 }

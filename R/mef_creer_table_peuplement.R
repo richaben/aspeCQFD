@@ -6,7 +6,7 @@
 #' @export
 #' 
 #' @importFrom aspe mef_ajouter_type_prelevement mef_ajouter_groupe_points
-#' @importFrom dplyr select left_join mutate recode case_when
+#' @importFrom dplyr select left_join mutate recode case_when distinct
 #' 
 #' @examples
 #' \dontrun{
@@ -21,13 +21,20 @@ mef_creer_table_peuplement <- function(df) {
     dplyr::select(code_sta_pp, 
                   sta_libelle_sandre, 
                   ope_id, 
-                  annee, 
+                  annee,
+                  ope_date,
                   pre_id,
-                  lop_id,
-                  esp_code_alternatif, 
-                  esp_nom_commun, 
-                  lop_effectif) %>% 
-    unique() %>% 
+                  lop_id) %>% 
+    dplyr::distinct() %>% 
+    # jointure lot poissons
+    dplyr::left_join(y = lot_poissons %>%
+                       dplyr::select(lop_id, esp_id = lop_esp_id, lop_effectif)) %>%
+    # jointure noms esp
+    dplyr::left_join(y = ref_espece %>%
+                       dplyr::select(esp_id, esp_code_alternatif,esp_nom_commun)) %>%
+    
+    # remove esp_id
+    dplyr::select(-esp_id) %>% 
     aspe::mef_ajouter_type_prelevement() %>% 
     aspe::mef_ajouter_groupe_points() %>%
     dplyr::left_join(passage, by = c('pre_id' = 'pas_id')) %>% 
@@ -41,7 +48,7 @@ mef_creer_table_peuplement <- function(df) {
     dplyr::mutate(tpe_libelle = factor(tpe_libelle, 
                                        ordered = T, 
                                        levels = c("Points standards","Points compl\u00e9mentaires",
-                                                  "Passage#1",'Passage#2','Passage#3'
+                                                  "Passage#1",'Passage#2','Passage#3','Ambiance'
                                        )))
   
 }
