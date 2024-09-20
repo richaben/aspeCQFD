@@ -21,10 +21,41 @@ library(aspeCQFD)
 
 ## Prérequis
 
-> Données ASPE
+### 1) Charger les données ASPE
 
-> Constituer 3 tableaux de données + sauvegarder dans l'environnement
+Une copie de la base de données ASPE sous format `Rdata` est nécessaire, devant comprendre l'ensemble des tables et mesures individuelles. Ce fichier `Rdata` est à créer avec les fonctions dédiées du package `aspe`.
 
+```{r, echo = FALSE}
+aspe_tables <-
+  aspe::misc_nom_dernier_fichier(repertoire = "D:/1_database/ASPE/database_aspe/processed_data",
+                                 pattern = "^tables")
+aspe_mei <- 
+  aspe::misc_nom_dernier_fichier(repertoire = "D:/1_database/ASPE/database_aspe/processed_data",
+                                 pattern = "^mei")
+load(aspe_tables)
+load(aspe_mei)
+
+rm(aspe_tables, aspe_mei)
+```
+
+### 2) Constituer les tableaux nécessaires
+
+Des fonctions spécifiques à la création des tableaux pour les fiches CQ sont disponibles dans le package `aspeCQFD`.
+
+```{r, echo = FALSE}
+### 1/ table de base
+aspe_table_fiches <-
+  mef_creer_table_base_fiches()
+
+### 2/ table avec les données des opérations
+aspe_table_fiches_ope_env <-
+  aspe_table_fiches %>% 
+  mef_creer_table_ope_env() %>% 
+  mef_ajouter_facies()
+
+### 3/ table avec les données poissons
+
+```
 
 ## Choisir une station
 

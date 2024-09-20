@@ -5,7 +5,7 @@
 #' @return un graphique ggplot2
 #' @export
 #' 
-#' @importFrom dplyr select mutate case_when filter
+#' @importFrom dplyr select mutate case_when filter distinct
 #' @importFrom forcats fct_rev
 #' @importFrom ggplot2 ggplot geom_point scale_shape_manual scale_color_manual ylab xlab scale_x_continuous theme_bw theme element_text labs geom_label facet_wrap geom_bar
 #' @importFrom ggtext element_textbox_simple
@@ -38,7 +38,7 @@ plot_facies_data <- function(df){
                   fac_tyc_id,
                   fac_ved_id,
                   fac_recouvrement_vegetation) %>% 
-    unique() %>% 
+    dplyr::distinct() %>% 
     dplyr::mutate(fac_tyf_id = factor(fac_tyf_id, 
                                       levels = c('Courant','Plat','Profond'), 
                                       ordered = T),
@@ -48,19 +48,19 @@ plot_facies_data <- function(df){
   facies_part1 <-
     df %>% 
     dplyr::select(code_sta_pp, 
-           sta_libelle_sandre, 
-           ope_id, 
-           annee,
-           fac_tyf_id, 
-           pch_tyf) %>% 
+                  sta_libelle_sandre, 
+                  ope_id, 
+                  annee,
+                  fac_tyf_id, 
+                  pch_tyf) %>% 
     {ggplot2::ggplot(., aes(x = annee, 
                             y = forcats::fct_rev(fac_tyf_id), 
                             shape = pch_tyf, 
                             col=pch_tyf)) +
         ggplot2::geom_point(size=3.5, 
-                   show.legend = F, 
-                   fill= '#99B2B7', 
-                   stroke= 1) +
+                            show.legend = F, 
+                            fill= '#99B2B7', 
+                            stroke= 1) +
         ggplot2::scale_shape_manual(values = c(21,4)) +
         ggplot2::scale_color_manual(values = c('black','red'))+
         ggplot2::ylab(NULL) +
@@ -108,8 +108,10 @@ plot_facies_data <- function(df){
           strip.text.x = ggplot2::element_text(face = 'bold'),
           axis.text.y = ggplot2::element_text(face = 'bold',size=9),
           title = ggplot2::element_text(face = 'bold', size=9),
-          axis.text.x = ggplot2::element_text(angle = 45, hjust=1, size = 8))+
-        ggplot2::labs(title = glue::glue('D\u00e9tails donn\u00e9es Faci\u00e8s'))
+          axis.text.x = ggplot2::element_text(angle = 45, hjust=1, size = 8),
+          plot.subtitle = ggtext::element_textbox_simple()) +
+        ggplot2::labs(title = glue::glue('D\u00e9tails donn\u00e9es Faci\u00e8s'),
+                      subtitle = glue::glue('{unique(.$sta_libelle_sandre)} ({unique(.$code_sta_pp)})'))
     }
   
   facies_importance_plot <-
@@ -129,18 +131,21 @@ plot_facies_data <- function(df){
         ggplot2::xlab(NULL) +
         ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
         ggplot2::labs(title = glue::glue('Importance relative Faci\u00e8s (%)'),
+                      subtitle = glue::glue('{unique(.$sta_libelle_sandre)} ({unique(.$code_sta_pp)})'),
                       fill = 'Type') +
         ggplot2::theme_bw() +
         ggplot2::theme(axis.text.y = ggplot2::element_text(face = 'bold',size=9),
-              title = ggplot2::element_text(face = 'bold', size=9),
-              axis.text.x = ggplot2::element_text(angle = 45, hjust=1, size = 8),
-              legend.position = 'bottom')
+                       title = ggplot2::element_text(face = 'bold', size=9),
+                       axis.text.x = ggplot2::element_text(angle = 45, hjust=1, size = 8),
+                       legend.position = 'bottom',
+                       plot.subtitle = ggtext::element_textbox_simple()
+                       )
     }
   
   patchwork::wrap_plots(
     facies_part1, facies_part2, facies_importance_plot,
     ncol = 1
-  ) +
+  ) + 
     patchwork::plot_layout(heights = c(0.7,3,1)) 
   
 }

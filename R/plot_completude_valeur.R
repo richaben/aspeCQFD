@@ -6,7 +6,7 @@
 #' @return un graphique ggplot2
 #' @export
 #'
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter distinct
 #' @importFrom ggplot2 ggplot geom_point scale_x_continuous ylab xlab theme_bw theme element_text labs
 #' @importFrom ggtext element_textbox_simple
 #' @importFrom glue glue
@@ -27,7 +27,7 @@
 
 plot_completude_valeur <- function(df){
   df %>% 
-    unique() %>% 
+    dplyr::distinct() %>% 
     tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee, pre_id),
                  values_to = "value",
                  values_transform = list(value = as.character)) %>% 

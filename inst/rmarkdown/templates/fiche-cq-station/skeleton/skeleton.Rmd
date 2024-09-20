@@ -11,10 +11,10 @@ output:
     css: 'ofb_theme_html.css'
 params:
   df_data: NULL
-  code_station: "03231000_013"
+  code_station: "03174000_005"
   auteur: "DR Normandie"
-  annee_debut: 2010
-  annee_fin: 2022  
+  annee_debut: 1995
+  annee_fin: 2012  
 editor_options: 
   chunk_output_type: console
 ---
@@ -53,6 +53,12 @@ df_station <-
   dplyr::filter(code_sta_pp == params$code_station) %>% 
   dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
                   format(ope_date, "%Y") <= params$annee_fin)
+
+df_station_ope_env <-
+  aspe_table_fiches_ope_env %>% 
+  dplyr::filter(code_sta_pp == params$code_station) %>% 
+  dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
+                  format(ope_date, "%Y") <= params$annee_fin)
 ```
 
 Pour cette station, il y a **`r nrow(ope_list)` opération(s)** bancarisée(s) dans ASPE (entre l'année `r params$annee_debut` et l'année `r params$annee_fin`, paramètres de filtres). 
@@ -83,24 +89,19 @@ df_station %>%
   plot_infos_context()
 ```
 
->>
 
 ## Mise en oeuvre de la pêche
 ### Description pêche
 
-```{r, fig.width=11, fig.height=6}
-df_tab_protocole_pts <-
-  df_station %>% 
-  mef_tab_protocole_pts()
-
-df_tab_protocole_pts %>% 
+```{r, fig.width=10, fig.height=6}
+df_station_ope_env %>% 
   plot_proto_prospec_passage()
 ```
 
 ### Descriptions pêche et environnement
 
-```{r, fig.width=11, fig.height=10}
-df_station %>% 
+```{r, fig.width=10, fig.height=10}
+df_station_ope_env %>% 
   plot_descript_peche_env()
 ```
 
@@ -108,17 +109,16 @@ df_station %>%
 ## Données environnementales
 ### faciès
 
-```{r, fig.width=12, fig.height=10}
-# df_station %>% 
-#   mef_ajouter_facies() %>% 
-#   plot_facies_data()
+```{r, fig.width=10, fig.height=9}
+df_station_ope_env %>% 
+  plot_facies_data()
 ```
 
 ### habitat
 
-```{r, fig.width=12, fig.height=8.5}
-# df_station %>% 
-#   plot_habitat_data()
+```{r, fig.width=10, fig.height=8.5}
+df_station_ope_env %>% 
+   plot_habitat_data()
 ```
 
 

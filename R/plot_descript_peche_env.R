@@ -140,7 +140,7 @@ plot_descript_peche_env <- function(df){
     mutate(value = stringr::str_wrap(value, 10)) %>% 
     {
       ggplot2::ggplot(., aes(y = name, x = annee)) + 
-        ggplot2::geom_point(data = (. %>% filter(is.na(value))), shape=4, size=3, col='red',stroke = 2, show.legend =  F) +
+        ggplot2::geom_point(data = (. %>% filter(is.na(value))), shape=4, size=2.8, col='red',stroke = 2, show.legend =  F) +
         ggplot2::geom_label(aes(label = value, fill=value), alpha=0.5, show.legend = F, size=2.5) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +

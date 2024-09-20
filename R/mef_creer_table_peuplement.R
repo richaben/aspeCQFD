@@ -12,11 +12,11 @@
 #' \dontrun{
 #' aspe_table_fiches %>%
 #'   dplyr::filter(code_sta_pp == "03231000_013") %>% 
-#'   mef_tab_peuplement()
+#'   mef_creer_table_peuplement()
 #' }
 #' 
 
-mef_tab_peuplement <- function(df) {
+mef_creer_table_peuplement <- function(df) {
   df %>% 
     dplyr::select(code_sta_pp, 
                   sta_libelle_sandre, 

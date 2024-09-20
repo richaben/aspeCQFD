@@ -25,7 +25,8 @@ mef_creer_table_ope_env <- function(df){
                   code_sandre_pp,
                   sta_libelle_sandre,
                   pro_libelle,
-                  pre_id) %>% 
+                  pre_id,
+                  pop_id) %>% 
     dplyr::distinct()  %>%
     dplyr::left_join(y = operation_description_peche %>%
                        dplyr::rename(ope_id = odp_ope_id,
@@ -45,6 +46,18 @@ mef_creer_table_ope_env <- function(df){
     dplyr::select(-mop_id) %>% 
     aspe::mef_ajouter_type_prelevement() %>% 
     aspe::mef_ajouter_groupe_points() %>%
-    dplyr::left_join(passage, by = c('pre_id' = 'pas_id')) 
+    dplyr::left_join(passage, by = c('pre_id' = 'pas_id')) %>% 
+    
+    # ajout donnees env. (ipr)
+    aspe::mef_ajouter_ope_env() %>% 
+    # ajout surface
+    dplyr::left_join(operation %>% 
+                       dplyr::select(ope_id, ope_surface_calculee, ope_eta_id, ope_niq_id, 
+                                     ope_commentaire)) %>%
+    dplyr::mutate(ope_eta_id = dplyr::recode(ope_eta_id, 
+                                             !!!setNames(ref_etat_avancement$eta_libelle, ref_etat_avancement$eta_id)),
+                  ope_niq_id = dplyr::recode(ope_niq_id, 
+                                             !!!setNames(ref_niveau_qualification$niq_libelle, ref_niveau_qualification$niq_id))) 
+    
 }
 

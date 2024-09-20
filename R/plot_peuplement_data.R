@@ -22,14 +22,16 @@ plot_peuplement_data <- function(df){
   
   df <- 
     df %>% 
-    mef_tab_peuplement() %>% 
+    #mef_creer_table_peuplement() %>% 
     dplyr::group_by(code_sta_pp, 
              sta_libelle_sandre, 
-             ope_id, annee, 
+             ope_id, 
+             annee, 
              pre_id,
              esp_code_alternatif, 
              esp_nom_commun, 
-             tpe_libelle) %>% 
+             tpe_libelle) %>%
+    dplyr::distinct() %>% 
     dplyr::summarise(lop_effectif = sum(lop_effectif))
   
   col_scale_peuplement <- 
