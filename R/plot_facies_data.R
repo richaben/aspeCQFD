@@ -7,7 +7,7 @@
 #' 
 #' @importFrom dplyr select mutate case_when filter distinct
 #' @importFrom forcats fct_rev
-#' @importFrom ggplot2 ggplot geom_point scale_shape_manual scale_color_manual ylab xlab scale_x_continuous theme_bw theme element_text labs geom_label facet_wrap geom_bar
+#' @importFrom ggplot2 ggplot geom_point scale_shape_manual scale_color_manual ylab xlab scale_x_date theme_bw theme element_text labs geom_label facet_wrap geom_bar
 #' @importFrom ggtext element_textbox_simple
 #' @importFrom glue glue
 #' @importFrom patchwork wrap_plots plot_layout
@@ -29,7 +29,8 @@ plot_facies_data <- function(df){
     dplyr::select(code_sta_pp, 
                   sta_libelle_sandre, 
                   ope_id, 
-                  annee, 
+                  annee,
+                  ope_date,
                   fac_tyf_id,
                   fac_importance_relative,
                   fac_profondeur_moyenne,
@@ -51,9 +52,10 @@ plot_facies_data <- function(df){
                   sta_libelle_sandre, 
                   ope_id, 
                   annee,
+                  ope_date,
                   fac_tyf_id, 
                   pch_tyf) %>% 
-    {ggplot2::ggplot(., aes(x = annee, 
+    {ggplot2::ggplot(., aes(x = ope_date, 
                             y = forcats::fct_rev(fac_tyf_id), 
                             shape = pch_tyf, 
                             col=pch_tyf)) +
@@ -65,7 +67,12 @@ plot_facies_data <- function(df){
         ggplot2::scale_color_manual(values = c('black','red'))+
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
-        ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
+        #ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
+        ggplot2::scale_x_date(date_breaks = "1 year", 
+                              date_minor_breaks = "1 year",
+                              date_labels = "%Y",
+                              limits = c(min(df$ope_date),
+                                         max(df$ope_date)+100)) +
         ggplot2::theme_bw() +
         ggplot2::theme(
           axis.text.y = ggplot2::element_text(face = 'bold',size=9),
@@ -83,16 +90,18 @@ plot_facies_data <- function(df){
                            sta_libelle_sandre, 
                            ope_id, 
                            annee,
+                           ope_date,
                            fac_tyf_id, 
                            pch_tyf),
                         values_to = "value",
                         values_transform = list(value = as.character)) %>% 
     dplyr::filter(!is.na(fac_tyf_id)) %>% 
-    {ggplot2::ggplot(., aes(x = annee, y = name)) +
+    {ggplot2::ggplot(., aes(x = ope_date, y = name)) +
         ggplot2::geom_point(data = (. %>% dplyr::filter(is.na(value))), 
                             shape=4, 
                             size=2.5, 
                             col='black',
+                            alpha = 0.8,
                             stroke = 1.5, 
                             show.legend =  F) +
         ggplot2::geom_label(aes(label = stringr::str_wrap(value, 20), fill= value), 
@@ -101,7 +110,12 @@ plot_facies_data <- function(df){
                             size=2.3) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
-        ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
+        #ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
+        ggplot2::scale_x_date(date_breaks = "1 year", 
+                              date_minor_breaks = "1 year",
+                              date_labels = "%Y",
+                              limits = c(min(df$ope_date),
+                                         max(df$ope_date)+100)) +
         ggplot2::facet_wrap(.~fac_tyf_id, nrow=3) +
         ggplot2::theme_bw() +
         ggplot2::theme(
@@ -120,16 +134,22 @@ plot_facies_data <- function(df){
                   sta_libelle_sandre, 
                   ope_id, 
                   annee,
+                  ope_date,
                   fac_tyf_id, 
                   pch_tyf, 
                   fac_importance_relative) %>% 
-    {ggplot2::ggplot(., aes(x = annee, 
+    {ggplot2::ggplot(., aes(x = ope_date, 
                             y = fac_importance_relative, 
                             fill = fac_tyf_id) ) +
-        ggplot2::geom_bar(stat="identity", width = 0.75, col='black', linewidth = 0.2, alpha = 0.8) +
+        ggplot2::geom_bar(stat="identity", col='black', linewidth = 0.2, alpha = 0.8) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
-        ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
+        #ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
+        ggplot2::scale_x_date(date_breaks = "1 year", 
+                              date_minor_breaks = "1 year",
+                              date_labels = "%Y",
+                              limits = c(min(df$ope_date),
+                                         max(df$ope_date)+100)) +
         ggplot2::labs(title = glue::glue('Importance relative Faci\u00e8s (%)'),
                       subtitle = glue::glue('{unique(.$sta_libelle_sandre)} ({unique(.$code_sta_pp)})'),
                       fill = 'Type') +
