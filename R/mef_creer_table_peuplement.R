@@ -5,7 +5,7 @@
 #' @return un dataframe avec les informations pour le peuplement
 #' @export
 #' 
-#' @importFrom aspe mef_ajouter_type_prelevement mef_ajouter_groupe_points
+#' @importFrom aspe mef_ajouter_type_prelevement mef_ajouter_groupe_points mef_ajouter_ipr
 #' @importFrom dplyr select left_join mutate recode case_when distinct
 #' 
 #' @examples
@@ -49,6 +49,7 @@ mef_creer_table_peuplement <- function(df) {
                                        ordered = T, 
                                        levels = c("Points standards","Points compl\u00e9mentaires",
                                                   "Passage#1",'Passage#2','Passage#3','Ambiance'
-                                       )))
+                                       ))) %>% 
+    aspe::mef_ajouter_ipr()
   
 }
