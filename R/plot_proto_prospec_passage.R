@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @importFrom dplyr select group_by mutate case_when filter
-#' @importFrom ggplot2 ggplot geom_point ylab xlab scale_x_continuous theme_bw scale_shape_manual theme element_text labs geom_bar scale_fill_manual element_blank
+#' @importFrom ggplot2 ggplot geom_point ylab xlab scale_x_date theme_bw scale_shape_manual theme element_text labs geom_bar scale_fill_manual element_blank
 #' @importFrom glue glue
 #' @importFrom patchwork wrap_plots
 #' @importFrom stringr str_detect str_wrap
@@ -28,7 +28,9 @@ plot_proto_prospec_passage <- function(df){
   df <- df %>% 
     dplyr::select(code_sta_pp, 
                   sta_libelle_sandre, 
-                  ope_id, annee, 
+                  ope_id, 
+                  annee, 
+                  ope_date,
                   pro_libelle, 
                   mop_libelle, 
                   tpe_libelle, 
@@ -48,7 +50,8 @@ plot_proto_prospec_passage <- function(df){
       dplyr::select(code_sta_pp, 
                     sta_libelle_sandre, 
                     ope_id, 
-                    annee, 
+                    annee,
+                    ope_date,
                     pro_libelle,
                     mop_libelle, 
                     pas_numero) %>% 
@@ -56,10 +59,11 @@ plot_proto_prospec_passage <- function(df){
       dplyr::group_by(code_sta_pp, 
                       sta_libelle_sandre, 
                       ope_id, 
-                      annee, 
+                      annee,
+                      ope_date,
                       pro_libelle,
                       mop_libelle) %>% 
-      tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee),
+      tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee , ope_date),
                    values_to = "value",
                    values_transform = list(value = as.character)) %>% 
       dplyr::mutate(value = dplyr::case_when(name == 'pas_numero' & !is.na(value) ~ 
@@ -70,16 +74,22 @@ plot_proto_prospec_passage <- function(df){
     part1 <- 
       df_part1 %>% 
       ggplot2::ggplot(., aes(y = stringr::str_wrap(value,15), 
-                             x = annee, 
+                             x = ope_date, 
                              shape = name, 
                              fill = name)) +
-      ggplot2::geom_point(col='black',size=4, show.legend = F) +
+      ggplot2::geom_point(col='black',size=3.5, alpha = 0.8, show.legend = F) +
       ggplot2::ylab(NULL) +
       ggplot2::xlab(NULL) +
-      ggplot2::scale_x_continuous(breaks = unique(df_part1$annee),
-                                  limits = c(min(df_part1$annee)-1,
-                                             max(df_part1$annee)+1)
-      ) +
+      # ggplot2::scale_x_continuous(breaks = unique(df_part1$annee),
+      #                             limits = c(min(df_part1$annee)-1,
+      #                                        max(df_part1$annee)+1)
+      # ) +
+      ggplot2::scale_x_date(date_breaks = "1 year", 
+                            date_minor_breaks = "1 year",
+                            date_labels = "%Y",
+                            limits = c(min(df$ope_date),
+                                       max(df$ope_date)+100)
+      ) + 
       ggplot2::theme_bw() +
       ggplot2::scale_shape_manual(values = c(21, 23, 24, 25)) +
       ggplot2::theme(
@@ -95,14 +105,21 @@ plot_proto_prospec_passage <- function(df){
     part2 <-
       df %>% 
       dplyr::filter(!is.na(grp_tgp_id)) %>%
-      ggplot2::ggplot(.,  aes(x = annee, y = grp_nombre, fill= grp_tgp_id)) +
-          ggplot2::geom_bar(stat="identity", width = 0.5, col='black', linewidth = 0.2, alpha = 0.8) +
+      ggplot2::ggplot(.,  aes(x = ope_date, y = grp_nombre, fill= grp_tgp_id)) +
+          ggplot2::geom_bar(stat="identity", width = 90, col='black', linewidth = 0.2, alpha = 0.8) +
           ggplot2::ylab(NULL) +
           ggplot2::xlab("Ann\u00e9es") + 
-          ggplot2::scale_x_continuous(breaks = unique(df$annee),
-                                      limits = c(min(df_part1$annee)-1,
-                                                 max(df_part1$annee)+1)
-                                      ) +
+          # ggplot2::scale_x_continuous(breaks = unique(df$annee),
+          #                             limits = c(min(df_part1$annee)-1,
+          #                                        max(df_part1$annee)+1)
+          #                             ) +
+      ggplot2::scale_x_date(date_breaks = "1 year", 
+                            date_minor_breaks = "1 year",
+                            date_labels = "%Y",
+                            limits = c(min(df$ope_date),
+                                       max(df$ope_date)+100)
+      ) + 
+      
           ggplot2::theme_bw() +
           ggplot2::scale_fill_manual(values=c('#4ECDC4','#999999')) +
           ggplot2::theme(legend.title=ggplot2::element_blank(),
@@ -122,7 +139,8 @@ plot_proto_prospec_passage <- function(df){
       dplyr::select(code_sta_pp, 
                     sta_libelle_sandre, 
                     ope_id, 
-                    annee, 
+                    annee,
+                    ope_date,
                     pro_libelle, 
                     mop_libelle, 
                     pas_numero) %>% 
@@ -130,26 +148,33 @@ plot_proto_prospec_passage <- function(df){
                       sta_libelle_sandre, 
                       ope_id, 
                       annee, 
+                      ope_date,
                       pro_libelle, 
                       mop_libelle) %>% 
-      tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee),
+      tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee, ope_date),
                    values_to = "value",
                    values_transform = list(value = as.character)) %>% 
       dplyr::mutate(value = dplyr::case_when(name == 'pas_numero' & !is.na(value) ~ paste0('#_passage: ', value),
                                TRUE ~ value)) %>% 
       filter(!is.na(value)) %>% 
       {ggplot2::ggplot(., aes(y = stringr::str_wrap(value,15), 
-                              x = annee, 
+                              x = ope_date, 
                               shape = name, 
                               fill = name)) +
-          ggplot2::geom_point(col='black',size=4, show.legend = F) +
+          ggplot2::geom_point(col='black',size=3.5, alpha = 0.8, show.legend = F) +
           ggplot2::ylab(NULL) +
           ggplot2::xlab(NULL) +
           ggplot2::theme_bw() +
-          ggplot2::scale_x_continuous(breaks = unique(df$annee),
-                                      limits = c(min(df$annee)-1,
-                                                 max(df$annee)+1)
-                                      ) +
+          # ggplot2::scale_x_continuous(breaks = unique(df$annee),
+          #                             limits = c(min(df$annee)-1,
+          #                                        max(df$annee)+1)
+          #                             ) +
+          ggplot2::scale_x_date(date_breaks = "1 year", 
+                                date_minor_breaks = "1 year",
+                                date_labels = "%Y",
+                                limits = c(min(df$ope_date),
+                                           max(df$ope_date)+100)
+          ) + 
           ggplot2::scale_shape_manual(values = c(21, 23, 24)) +
           ggplot2::theme(axis.text.y = ggplot2::element_text(face = 'bold',size=10),
                 title = ggplot2::element_text(face = 'bold', size=9),

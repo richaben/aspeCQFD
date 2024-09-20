@@ -29,7 +29,6 @@ plot_objectif_reseau <- function(df){
                   annee,
                   ope_date,
                   obj_libelle) %>% 
-    dplyr::mutate(ope_date = as.Date(ope_date)) %>% 
     unique() %>%
     tidyr::pivot_longer(cols = -c(code_sta_pp, 
                                   sta_libelle_sandre, 

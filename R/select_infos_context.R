@@ -20,6 +20,7 @@ select_infos_context <- function(df) {
                   sta_libelle_sandre, 
                   ope_id, 
                   annee,
+                  ope_date,
                   ope_id,
                   ope_pente_ligne_eau,
                   ope_section_mouillee,

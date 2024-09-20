@@ -6,7 +6,7 @@
 #' @export
 #' 
 #' @importFrom dplyr mutate
-#' @importFrom ggplot2 geom_point geom_label ylab xlab theme_bw scale_x_continuous theme element_text labs
+#' @importFrom ggplot2 geom_point geom_label ylab xlab theme_bw scale_x_date theme element_text labs
 #' @importFrom ggtext element_textbox_simple
 #' @importFrom glue glue
 #' @importFrom stringr str_wrap
@@ -29,12 +29,16 @@ plot_infos_context <- function(df){
   
   df %>% 
     unique() %>% 
-    tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee),
+    tidyr::pivot_longer(cols = -c(code_sta_pp, 
+                                  sta_libelle_sandre, 
+                                  ope_id, 
+                                  ope_date,
+                                  annee),
                  values_to = "value",
                  values_transform = list(value = as.character)) %>% 
     dplyr::mutate(
            name = stringr::str_wrap(gsub(replacement = " ", pattern = '_', name), 25)) %>% 
-  {ggplot(., aes(y = name, x = annee)) +
+  {ggplot(., aes(y = name, x = ope_date)) +
       ggplot2::geom_point(data = (. %>% filter(is.na(value))), 
                           shape=4, 
                           size=3, 
@@ -48,8 +52,12 @@ plot_infos_context <- function(df){
       ggplot2::ylab(NULL) +
       ggplot2::xlab("Ann\u00e9es") +
       ggplot2::theme_bw() +
-      ggplot2::scale_x_continuous(breaks = unique(.$annee), 
-                                  minor_breaks = 1) +
+      ggplot2::scale_x_date(date_breaks = "1 year", 
+                            date_minor_breaks = "1 year",
+                            date_labels = "%Y"
+      ) + 
+      # ggplot2::scale_x_continuous(breaks = unique(.$annee), 
+      #                             minor_breaks = 1) +
       ggplot2::theme(
         axis.text.y = ggplot2::element_text(face = 'bold',size=10),
         title = ggplot2::element_text(face = 'bold', size=9),

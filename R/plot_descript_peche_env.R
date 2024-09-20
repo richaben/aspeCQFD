@@ -27,6 +27,7 @@ plot_descript_peche_env <- function(df){
                   sta_libelle_sandre, 
                   ope_id, 
                   annee,
+                  ope_date,
                   pre_id,
                   odp_longueur,
                   odp_largeur_lame_eau,
@@ -40,7 +41,8 @@ plot_descript_peche_env <- function(df){
     dplyr::select(code_sta_pp, 
                   sta_libelle_sandre, 
                   ope_id, 
-                  annee, 
+                  annee,
+                  ope_date,
                   pre_id,
                   odp_puissance,
                   odp_tension,
@@ -60,29 +62,32 @@ plot_descript_peche_env <- function(df){
                   sta_libelle_sandre, 
                   ope_id, 
                   annee, 
+                  ope_date,
                   odp_longueur,
                   odp_largeur_lame_eau,
                   profondeur,
                   ope_surface_calculee) %>% 
     unique() %>% 
-    tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee)) %>% 
+    tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee, ope_date)) %>% 
     dplyr::mutate(name = gsub(name, pattern = 'odp_', replacement = ''),
            name = gsub(name, pattern = '_', replacement = ' ')) %>% 
     dplyr::mutate(#annee = as.factor(annee),
            name = stringr::str_wrap(gsub(replacement = " ", pattern = '_', name), 20)) %>% 
-    {ggplot2::ggplot(., aes(y = value, x = annee)) + 
+    {ggplot2::ggplot(., aes(y = value, x = ope_date)) + 
         ggplot2::geom_bar(col='black', 
                           linewidth= 0.2, 
                           fill = '#79BD9A', 
-                          stat="identity", 
-                          width = 0.5) +
+                          stat="identity") +
         #scale_y_continuous(breaks = integer_breaks()) +
         ggplot2::facet_wrap(~name, scales = 'free_y', ncol = 2) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
         ggplot2::theme_bw() +
-        ggplot2::scale_x_continuous(breaks = unique(.$annee), 
-                                    minor_breaks = 1) +
+        # ggplot2::scale_x_continuous(breaks = unique(.$annee), 
+        #                             minor_breaks = 1) +
+        ggplot2::scale_x_date(date_breaks = "1 year", 
+                              date_minor_breaks = "1 year",
+                              date_labels = "%Y") + 
         ggplot2::theme(
           strip.text.x = ggplot2::element_text(face = 'bold', size = 9),
           axis.text.y = ggplot2::element_text(face = 'bold',size=9),
@@ -94,7 +99,7 @@ plot_descript_peche_env <- function(df){
   
   param_descript2 <-
     df %>% 
-    dplyr::select(code_sta_pp, sta_libelle_sandre, ope_id, annee, 
+    dplyr::select(code_sta_pp, sta_libelle_sandre, ope_id, annee, ope_date,
                   odp_puissance,
                   odp_tension,
                   odp_intensite,
@@ -102,23 +107,26 @@ plot_descript_peche_env <- function(df){
                   odp_nombre_epuisettes,
                   odp_maille_epuisette) %>% 
     unique() %>% 
-    tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee)) %>% 
+    tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee, ope_date)) %>% 
     dplyr::mutate(name = gsub(name, pattern = 'odp_', replacement = ''),
                   name = gsub(name, pattern = '_', replacement = ' ')) %>% 
     dplyr::mutate(
       name = stringr::str_wrap(gsub(replacement = " ", pattern = '_', name), 20)) %>% 
-    {ggplot2::ggplot(., aes(y = value, x = annee)) + 
+    {ggplot2::ggplot(., aes(y = value, x = ope_date)) + 
         ggplot2::geom_bar(col='black', 
                           linewidth= 0.2, 
                           fill = '#594F4F', 
-                          stat="identity", 
-                          width = 0.5) +
+                          stat="identity"
+                          ) +
         ggplot2::facet_wrap(~name, scales = 'free_y', ncol = 2) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
         ggplot2::theme_bw() +
-        ggplot2::scale_x_continuous(breaks = unique(.$annee), 
-                                    minor_breaks = 1) +
+        # ggplot2::scale_x_continuous(breaks = unique(.$annee), 
+        #                             minor_breaks = 1) +
+        ggplot2::scale_x_date(date_breaks = "1 year", 
+                              date_minor_breaks = "1 year",
+                              date_labels = "%Y") + 
         ggplot2::theme(
           strip.text.x = ggplot2::element_text(face = 'bold', size = 9),
           axis.text.y = ggplot2::element_text(face = 'bold',size=9),
@@ -131,22 +139,25 @@ plot_descript_peche_env <- function(df){
   param_descript3 <-
     df %>% 
     dplyr::select(
-                  code_sta_pp, sta_libelle_sandre, ope_id, annee,
+                  code_sta_pp, sta_libelle_sandre, ope_id, annee, ope_date,
                   odp_ted_id,
                   odp_tur_id,
                   odp_coh_id) %>% 
     unique() %>% 
-    tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee)) %>% 
+    tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee, ope_date)) %>% 
     mutate(value = stringr::str_wrap(value, 10)) %>% 
     {
-      ggplot2::ggplot(., aes(y = name, x = annee)) + 
+      ggplot2::ggplot(., aes(y = name, x = ope_date)) + 
         ggplot2::geom_point(data = (. %>% filter(is.na(value))), shape=4, size=2.8, col='red',stroke = 2, show.legend =  F) +
         ggplot2::geom_label(aes(label = value, fill=value), alpha=0.5, show.legend = F, size=2.5) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
         ggplot2::theme_bw() +
-        ggplot2::scale_x_continuous(breaks = unique(.$annee), 
-                                    minor_breaks = 1) +
+        # ggplot2::scale_x_continuous(breaks = unique(.$annee), 
+        #                             minor_breaks = 1) +
+        ggplot2::scale_x_date(date_breaks = "1 year", 
+                              date_minor_breaks = "1 year",
+                              date_labels = "%Y") + 
         ggplot2::theme(
           axis.text.y = ggplot2::element_text(face = 'bold',size=9),
           title = ggplot2::element_text(face = 'bold', size=9),

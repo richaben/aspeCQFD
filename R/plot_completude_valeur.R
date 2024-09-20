@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @importFrom dplyr filter distinct
-#' @importFrom ggplot2 ggplot geom_point scale_x_continuous ylab xlab theme_bw theme element_text labs
+#' @importFrom ggplot2 ggplot geom_point scale_x_date ylab xlab theme_bw theme element_text labs
 #' @importFrom ggtext element_textbox_simple
 #' @importFrom glue glue
 #' @importFrom tidyr pivot_longer
@@ -28,24 +28,29 @@
 plot_completude_valeur <- function(df){
   df %>% 
     dplyr::distinct() %>% 
-    tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee, pre_id),
+    tidyr::pivot_longer(cols = -c(code_sta_pp, sta_libelle_sandre, ope_id, annee, ope_date, pre_id),
                  values_to = "value",
                  values_transform = list(value = as.character)) %>% 
     #dplyr::mutate(annee = as.factor(annee)) %>% 
-    {ggplot2::ggplot(., aes(y = name, x = annee)) +
+    {ggplot2::ggplot(., aes(y = name, x = ope_date)) +
         ggplot2::geom_point(data = (. %>% dplyr::filter(is.na(value))), 
                             shape=4, 
                             size=2.8, 
                             col='red',
-                            stroke = 2, 
+                            stroke = 1.5,
+                            alpha = 0.8,
                             show.legend =  F) +
         ggplot2::geom_point(data = (. %>% dplyr::filter(!is.na(value))), 
                             shape=21, 
                             fill= '#99B2B7', 
                             size=2.5, 
+                            alpha = 0.8,
                             col='black', 
                             show.legend =  F) +
-        ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
+        #ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
+        ggplot2::scale_x_date(date_breaks = "1 year", 
+                              date_minor_breaks = "1 year",
+                              date_labels = "%Y") + 
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
         ggplot2::theme_bw() +

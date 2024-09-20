@@ -9,7 +9,7 @@
 #' @export
 #' 
 #' @importFrom aspe mef_creer_passerelle mef_ajouter_objectif mef_ajouter_ope_date mef_ajouter_intervenants mef_ajouter_dept
-#' @importFrom dplyr filter select starts_with as_tibble
+#' @importFrom dplyr filter select starts_with as_tibble mutate
 #' 
 #' @examples
 #' \dontrun{
@@ -27,6 +27,7 @@ mef_creer_table_base_fiches <- function() {
       "RRP \u2013 R\u00e9seau de R\u00e9f\u00e9rence P\u00e9renne")) %>% 
     # ajout date
     aspe::mef_ajouter_ope_date() %>%
+    dplyr::mutate(ope_date = as.Date(ope_date)) %>% 
     # ajout intervenant
     aspe::mef_ajouter_intervenants() %>% 
     dplyr::select(- operateur_ofb, 
