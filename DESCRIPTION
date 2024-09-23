@@ -25,6 +25,7 @@ Imports:
     progressr,
     RColorBrewer,
     rmarkdown,
+    scales,
     stringr,
     tidyr
 Remotes: 

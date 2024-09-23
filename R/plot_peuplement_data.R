@@ -7,7 +7,7 @@
 #' 
 #' @importFrom dplyr group_by summarise
 #' @importFrom forcats fct_rev
-#' @importFrom ggplot2 ggplot geom_bar facet_wrap scale_y_continuous ylab xlab scale_x_date theme_bw scale_fill_manual theme element_blank element_text labs
+#' @importFrom ggplot2 ggplot expansion geom_bar facet_wrap scale_y_continuous ylab xlab scale_x_date theme_bw scale_fill_manual theme element_blank element_text labs
 #' @importFrom ggtext element_textbox_simple
 #' @importFrom glue glue
 #' @importFrom RColorBrewer brewer.pal
@@ -66,11 +66,15 @@ plot_peuplement_data <- function(df){
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
         #ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
+        # ggplot2::scale_x_date(date_breaks = "1 year",
+        #                       date_minor_breaks = "1 year",
+        #                       date_labels = "%Y",
+        #                       limits = c(min(df$ope_date)-180,
+        #                                  max(df$ope_date)+180)) +
         ggplot2::scale_x_date(date_breaks = "1 year",
                               date_minor_breaks = "1 year",
                               date_labels = "%Y",
-                              limits = c(min(df$ope_date)-180,
-                                         max(df$ope_date)+180)) +
+                              expand = ggplot2::expansion(mult = .1)) +
         ggplot2::theme_bw() +
         ggplot2::scale_fill_manual(values = col_scale_peuplement) +
         #ggplot2::scale_color_manual(values = col_scale_peuplement) +

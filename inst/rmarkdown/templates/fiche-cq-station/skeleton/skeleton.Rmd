@@ -153,7 +153,8 @@ df_station_ipr %>%
 
 
 ```{r, fig.width=10, fig.height=8}
-
+df_station_ipr %>% 
+  plot_ipr_metrique()
 ```
 
 
@@ -161,7 +162,7 @@ df_station_ipr %>%
 
 ```
 
-### Commentaires
+### Commentaires éventuels
 
 ```{r}
 ope_list %>% 

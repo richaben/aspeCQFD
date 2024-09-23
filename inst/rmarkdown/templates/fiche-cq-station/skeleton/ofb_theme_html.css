@@ -2,7 +2,7 @@
 
 h1.title {
   color: white;
-  /*background-image: url("XXX.jpg");*/
+  background-image: url("XXX.jpg");
   padding-top: 150px;
   padding-right: 50px;
   padding-bottom: 10px;
@@ -13,6 +13,12 @@ h1.title {
   height: 250px;
 }
 */
+
+/*div.main-container {
+  max-width: 100% !important;
+  margin: auto;
+}*/
+
 
 h1:before,h1:after {
     content:'';
