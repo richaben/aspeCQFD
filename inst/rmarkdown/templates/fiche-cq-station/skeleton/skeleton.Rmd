@@ -59,6 +59,19 @@ df_station_ope_env <-
   dplyr::filter(code_sta_pp == params$code_station) %>% 
   dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
                   format(ope_date, "%Y") <= params$annee_fin)
+
+df_station_peuplement <-
+  aspe_table_fiches_peuplement %>% 
+  dplyr::filter(code_sta_pp == params$code_station) %>% 
+  dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
+                  format(ope_date, "%Y") <= params$annee_fin)
+
+
+df_station_ipr <-
+  aspe_table_fiches_ipr %>% 
+  dplyr::filter(code_sta_pp == params$code_station) %>% 
+  dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
+                  format(ope_date, "%Y") <= params$annee_fin)
 ```
 
 Pour cette station, il y a **`r nrow(ope_list)` opération(s)** bancarisée(s) dans ASPE (entre l'année `r params$annee_debut` et l'année `r params$annee_fin`, paramètres de filtres). 
@@ -126,14 +139,16 @@ df_station_ope_env %>%
 ### Le cortège d'espèces
 
 ```{r, fig.height=7.5, fig.width=12}
-df_station %>%
+df_station_peuplement %>%
   plot_peuplement_data()
 ```
 
 ### L'indice poisson rivière (IPR)
 
 ```{r, fig.width=10, fig.height=7}
-
+df_station_ipr %>% 
+  plot_ipr_station(df = ., 
+                   df_col_ipr = tab_col_class_ipr())
 ```
 
 

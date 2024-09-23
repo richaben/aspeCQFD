@@ -37,7 +37,7 @@ plot_peuplement_data <- function(df){
                     ope_id, 
                     annee,
                     ope_date,
-                    pre_id,
+                    #pre_id,
                     esp_code_alternatif, 
                     esp_nom_commun, 
                     tpe_libelle) %>%
@@ -52,24 +52,28 @@ plot_peuplement_data <- function(df){
                sort())
     
     df %>% 
-    {ggplot2::ggplot(.,  aes(x = ope_date, y = lop_effectif, fill= forcats::fct_rev(tpe_libelle))) +
+    {ggplot2::ggplot(.,  aes(x = ope_date, 
+                             y = lop_effectif, 
+                             #color= forcats::fct_rev(tpe_libelle),
+                             fill= forcats::fct_rev(tpe_libelle))) +
         ggplot2::geom_bar(stat="identity", 
                           col = 'black', 
-                          linewidth = 0.2, 
-                          width = 120,
+                          linewidth = 0.1, 
+                          width = diff(sort(unique(df$ope_date))) %>% min(),
                           alpha = 0.8) +
         ggplot2::facet_wrap(.~esp_code_alternatif, scales = 'free_y') + 
         #ggplot2::scale_y_continuous(breaks = integer_breaks()) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
-        ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
-        ggplot2::scale_x_date(date_breaks = "1 year", 
+        #ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
+        ggplot2::scale_x_date(date_breaks = "1 year",
                               date_minor_breaks = "1 year",
                               date_labels = "%Y",
                               limits = c(min(df$ope_date)-180,
                                          max(df$ope_date)+180)) +
         ggplot2::theme_bw() +
         ggplot2::scale_fill_manual(values = col_scale_peuplement) +
+        #ggplot2::scale_color_manual(values = col_scale_peuplement) +
         ggplot2::theme(legend.title=ggplot2::element_blank(),
               axis.text.y = ggplot2::element_text(face = 'bold',size=8),
               title = ggplot2::element_text(face = 'bold', size=8),
