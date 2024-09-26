@@ -10,7 +10,8 @@ generate_fiche_cq_station(
   dossier_sortie = getwd(),
   auteur,
   annee_debut,
-  annee_fin
+  annee_fin,
+  interactive = FALSE
 )
 }
 \arguments{

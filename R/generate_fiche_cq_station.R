@@ -28,7 +28,8 @@ generate_fiche_cq_station <- function(stations,
                                       dossier_sortie = getwd(),
                                       auteur,
                                       annee_debut,
-                                      annee_fin){
+                                      annee_fin,
+                                      interactive = FALSE){
   options(future.rng.onMisuse = "ignore")
   cli::cli_alert_info("Cr\u00e9ation des fiches CQ stations")
   
@@ -50,7 +51,8 @@ generate_fiche_cq_station <- function(stations,
                          params=list(code_station = .x,
                                      auteur = auteur,
                                      annee_debut = annee_debut,
-                                     annee_fin = annee_fin))
+                                     annee_fin = annee_fin,
+                                     interactive = interactive))
                          
                        }
     )

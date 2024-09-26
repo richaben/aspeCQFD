@@ -14,7 +14,8 @@ params:
   code_station: "03174000_005"
   auteur: "DR Normandie"
   annee_debut: 1995
-  annee_fin: 2012  
+  annee_fin: 2012
+  interactive: NULL  
 editor_options: 
   chunk_output_type: console
 ---
@@ -75,6 +76,12 @@ df_station_ipr <-
 
 df_station_proba_esp_ipr <-
   aspe_table_proba_esp_ipr %>% 
+  dplyr::filter(code_sta_pp == params$code_station) %>% 
+  dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
+                  format(ope_date, "%Y") <= params$annee_fin)
+
+df_station_param_ipr <-
+aspe_table_fiches_ipr_env %>% 
   dplyr::filter(code_sta_pp == params$code_station) %>% 
   dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
                   format(ope_date, "%Y") <= params$annee_fin)
@@ -164,9 +171,30 @@ df_station_ipr %>%
 ```
 
 
-```{r, fig.width=14, fig.height=7.5}
+```{r, fig.width=12, fig.height=7}
 df_station_proba_esp_ipr %>% 
   plot_ipr_proba_esp_station()
+```
+
+```{r, fig.width=10, fig.height=7.5}
+df_station_param_ipr %>%
+   plot_ipr_param_station()
+```
+
+```{r, fig.width=11, fig.height=6.5}
+if(params$interactive == TRUE){
+  df_station_param_ipr %>%
+   plot_ipr_param_station() %>% 
+ggiraph::girafe(ggobj = . #, height_svg = 6, width_svg = 10
+                )
+} else {
+  df_station_param_ipr %>%
+   plot_ipr_param_station()
+}
+# df_station_param_ipr %>%
+#    plot_ipr_param_station() %>% 
+# ggiraph::girafe(ggobj = . #, height_svg = 6, width_svg = 10
+#                 )
 ```
 
 ### Commentaires éventuels
