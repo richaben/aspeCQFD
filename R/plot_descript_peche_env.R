@@ -115,7 +115,7 @@ plot_descript_peche_env <- function(df){
     {ggplot2::ggplot(., aes(y = value, x = ope_date)) + 
         ggplot2::geom_bar(col='black', 
                           linewidth= 0.2, 
-                          fill = '#594F4F', 
+                          fill = '#61a5c2', 
                           stat="identity"
                           ) +
         ggplot2::facet_wrap(~name, scales = 'free_y', ncol = 2) +

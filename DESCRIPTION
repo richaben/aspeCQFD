@@ -15,6 +15,7 @@ Imports:
     dplyr,
     forcats,
     furrr,
+    ggiraph,
     ggplot2,
     ggrepel,
     ggtext,

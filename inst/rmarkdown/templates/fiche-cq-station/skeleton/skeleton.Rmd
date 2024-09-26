@@ -72,6 +72,12 @@ df_station_ipr <-
   dplyr::filter(code_sta_pp == params$code_station) %>% 
   dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
                   format(ope_date, "%Y") <= params$annee_fin)
+
+df_station_proba_esp_ipr <-
+  aspe_table_proba_esp_ipr %>% 
+  dplyr::filter(code_sta_pp == params$code_station) %>% 
+  dplyr::filter(format(ope_date, "%Y") >= params$annee_debut & 
+                  format(ope_date, "%Y") <= params$annee_fin)
 ```
 
 Pour cette station, il y a **`r nrow(ope_list)` opération(s)** bancarisée(s) dans ASPE (entre l'année `r params$annee_debut` et l'année `r params$annee_fin`, paramètres de filtres). 
@@ -158,8 +164,9 @@ df_station_ipr %>%
 ```
 
 
-```{r, fig.width=12, fig.height=7.5}
-
+```{r, fig.width=14, fig.height=7.5}
+df_station_proba_esp_ipr %>% 
+  plot_ipr_proba_esp_station()
 ```
 
 ### Commentaires éventuels
