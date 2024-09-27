@@ -11,11 +11,13 @@
 #' @export
 #'
 #' @importFrom dplyr select filter
-#' @importFrom ggplot2 ggplot geom_rect scale_fill_manual scale_y_continuous expansion scale_x_date geom_line geom_point ylab xlab theme_bw theme element_text element_line element_rect labs
+#' @importFrom ggiraph geom_point_interactive
+#' @importFrom ggplot2 ggplot geom_rect scale_fill_manual scale_y_continuous expansion scale_x_date geom_line ylab xlab theme_bw theme element_text element_line element_rect labs
 #' @importFrom ggtext element_textbox_simple
 #' @importFrom glue glue
 #' @importFrom patchwork wrap_plots plot_layout
 #' @importFrom tidyr pivot_longer
+#' 
 #' @examples
 #' \dontrun{
 #' 
@@ -72,7 +74,13 @@ plot_ipr_station <- function(df,
         
         ggplot2::geom_line(show.legend = F,lty=2,aes(x=ope_date,y=ipr)) +
         
-        ggplot2::geom_point(size=2.5,pch=21,fill="grey70",aes(x=ope_date,y=ipr)) +
+        ggiraph::geom_point_interactive(size=2.5,
+                                        pch=21,
+                                        fill="grey70",
+                                        aes(x=ope_date,y=ipr,
+                                        tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                         "ope_date: ", ope_date),
+                                        data_id = ope_id)) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
         ggplot2::theme_bw() +
@@ -101,8 +109,23 @@ plot_ipr_station <- function(df,
     dplyr::select(code_sta_pp, sta_libelle_sandre, ope_id, annee, ope_date, ipr) %>% 
     tidyr::pivot_longer(c(ipr)) %>% 
     {ggplot2::ggplot(data = ., aes(x = ope_date, y = name)) +
-        ggplot2::geom_point(data = (. %>% dplyr::filter(!is.na(value))), shape=21, size=3, fill='grey',show.legend =  F) +
-        ggplot2::geom_point(data = (. %>% dplyr::filter(is.na(value))), shape=4, size=3, col='red',stroke = 2, show.legend =  F) +
+        ggiraph::geom_point_interactive(data = (. %>% dplyr::filter(!is.na(value))), 
+                                        shape=21, 
+                                        size=3, 
+                                        fill='grey',
+                                        show.legend =  F,
+                                        aes(tooltip = paste0("ope_id: ", ope_id, "<br>",
+                                                         "ope_date: ", ope_date),
+                                        data_id = ope_id)) +
+        ggiraph::geom_point_interactive(data = (. %>% dplyr::filter(is.na(value))), 
+                                        shape=4, 
+                                        size=3, 
+                                        col='red',
+                                        stroke = 2, 
+                                        show.legend =  F,
+                                        aes(tooltip = paste0("ope_id: ", ope_id, "<br>",
+                                                             "ope_date: ", ope_date),
+                                            data_id = ope_id)) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
         ggplot2::theme_bw() +

@@ -56,11 +56,17 @@ plot_peuplement_data <- function(df){
                              y = lop_effectif, 
                              #color= forcats::fct_rev(tpe_libelle),
                              fill= forcats::fct_rev(tpe_libelle))) +
-        ggplot2::geom_bar(stat="identity", 
+        ggiraph::geom_bar_interactive(stat="identity", 
                           col = 'black', 
                           linewidth = 0.1, 
                           width = diff(sort(unique(df$ope_date))) %>% min(),
-                          alpha = 0.8) +
+                          alpha = 0.8,
+                          aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                           "ope_date: ", ope_date, "<br>",
+                                           esp_code_alternatif, "<br>",
+                                           tpe_libelle
+                                           ),
+                          data_id = paste0(ope_id, tpe_libelle))) +
         ggplot2::facet_wrap(.~esp_code_alternatif, scales = 'free_y') + 
         #ggplot2::scale_y_continuous(breaks = integer_breaks()) +
         ggplot2::ylab(NULL) +

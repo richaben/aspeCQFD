@@ -6,7 +6,8 @@
 #' @export
 #'
 #' @importFrom dplyr select contains
-#' @importFrom ggplot2 ggplot geom_bar position_dodge facet_wrap ylab xlab scale_x_date expansion theme_bw theme element_text labs
+#' @importFrom ggiraph geom_bar_interactive
+#' @importFrom ggplot2 ggplot position_dodge facet_wrap ylab xlab scale_x_date expansion theme_bw theme element_text labs
 #' @importFrom ggtext element_textbox_simple
 #' @importFrom glue glue
 #' @importFrom tidyr pivot_longer separate_wider_delim
@@ -40,12 +41,17 @@ plot_ipr_metrique <- function(df){
     {ggplot2::ggplot(data=., aes(x = ope_date, 
                                  y = valeur, 
                                  fill=type, 
-                                 group = type)) +
-        ggplot2::geom_bar(stat = 'identity',
+                                 group = type,
+                                 )) +
+        ggiraph::geom_bar_interactive(stat = 'identity',
                           position = ggplot2::position_dodge(), 
                           col='black',
                           linewidth = 0.1, 
-                          alpha=0.8) +
+                          alpha=0.8,
+                          aes(tooltip = paste0("ope_id: ", ope_id, "<br>",
+                                               "ope_date: ", ope_date, "<br>",
+                                               "type: ", type),
+                              data_id = paste(ope_id, type))) +
         ggplot2::facet_wrap(.~metrique, scales = 'free_y') +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +

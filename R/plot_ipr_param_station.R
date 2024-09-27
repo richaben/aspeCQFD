@@ -47,7 +47,7 @@ plot_ipr_param_station <- function(df){
                                         alpha = 0.8,
                                         show.legend =  F,
                                         aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
-                                                             ope_date),
+                                                             "ope_date: ", ope_date),
                                             data_id = ope_id)) +
         ggiraph::geom_point_interactive(data = (. %>% dplyr::filter(!is.na(value))), 
                                         shape=21, 
@@ -57,7 +57,7 @@ plot_ipr_param_station <- function(df){
                                         col='black', 
                                         show.legend =  F,
                                         aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
-                                                             ope_date),
+                                                             "ope_date: ", ope_date),
                                             data_id = ope_id)
         ) +
         #ggplot2::scale_x_continuous(breaks = unique(.$annee)) +
@@ -85,7 +85,7 @@ plot_ipr_param_station <- function(df){
         ggiraph::geom_line_interactive() +
         ggiraph::geom_point_interactive(pch = 21, size = 2, fill = '#ffc8dd',
                                         aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
-                                                             ope_date),
+                                                             "ope_date: ", ope_date),
                                             data_id = ope_id)) +
         ggplot2::facet_wrap(~name,
                             scales = "free_y") +

@@ -151,50 +151,72 @@ df_station_ope_env %>%
 ## Saisies piscicoles
 ### Le cortège d'espèces
 
-```{r, fig.height=7.5, fig.width=12}
+```{r, fig.height=6.5, fig.width=10}
+if(params$interactive == TRUE){
 df_station_peuplement %>%
+  plot_peuplement_data() %>% 
+    ggiraph::girafe(ggobj = .)
+} else {
+  df_station_peuplement %>%
   plot_peuplement_data()
+}
 ```
 
 ### L'indice poisson rivière (IPR)
 
-```{r, fig.width=10, fig.height=7}
-df_station_ipr %>% 
-  plot_ipr_station(df = ., 
-                   df_col_ipr = tab_col_class_ipr())
+```{r, fig.width=10, fig.height=6.5}
+if(params$interactive == TRUE){
+  df_station_ipr %>% 
+    plot_ipr_station(df = ., 
+                     df_col_ipr = tab_col_class_ipr()) %>% 
+    ggiraph::girafe(ggobj = .)
+} else {
+  df_station_ipr %>% 
+    plot_ipr_station(df = ., 
+                     df_col_ipr = tab_col_class_ipr())
+}
 ```
 
 
-```{r, fig.width=10, fig.height=8}
-df_station_ipr %>% 
-  plot_ipr_metrique()
+```{r, fig.width=10, fig.height=6.5}
+if(params$interactive == TRUE){
+  df_station_ipr %>% 
+    plot_ipr_metrique() %>% 
+    ggiraph::girafe(ggobj = .) 
+} else {
+  df_station_ipr %>% 
+    plot_ipr_metrique()
+}
 ```
 
 
-```{r, fig.width=12, fig.height=7}
-df_station_proba_esp_ipr %>% 
-  plot_ipr_proba_esp_station()
+```{r, fig.width=9.5, fig.height=6.5}
+if(params$interactive == TRUE){
+  df_station_proba_esp_ipr %>% 
+    plot_ipr_proba_esp_station() %>% 
+    ggiraph::girafe(ggobj = .) 
+} else {
+  df_station_proba_esp_ipr %>% 
+    plot_ipr_proba_esp_station()
+}
 ```
 
-```{r, fig.width=10, fig.height=7.5}
-df_station_param_ipr %>%
-   plot_ipr_param_station()
-```
 
-```{r, fig.width=11, fig.height=6.5}
+```{r, fig.width=10, fig.height=6.5}
+# ```{r, fig.width=10, fig.height=7.5}
+# df_station_param_ipr %>%
+#    plot_ipr_param_station()
+# ```
+
 if(params$interactive == TRUE){
   df_station_param_ipr %>%
-   plot_ipr_param_station() %>% 
-ggiraph::girafe(ggobj = . #, height_svg = 6, width_svg = 10
-                )
+    plot_ipr_param_station() %>% 
+    ggiraph::girafe(ggobj = . #, height_svg = 6, width_svg = 10
+    )
 } else {
   df_station_param_ipr %>%
-   plot_ipr_param_station()
+    plot_ipr_param_station()
 }
-# df_station_param_ipr %>%
-#    plot_ipr_param_station() %>% 
-# ggiraph::girafe(ggobj = . #, height_svg = 6, width_svg = 10
-#                 )
 ```
 
 ### Commentaires éventuels

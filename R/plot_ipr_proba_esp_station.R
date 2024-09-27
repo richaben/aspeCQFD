@@ -4,7 +4,14 @@
 #'
 #' @return un graphique ggplot2
 #' @export
-#'
+#' 
+#' @importFrom dplyr filter mutate arrange if_else
+#' @importFrom forcats fct_reorder
+#' @importFrom ggiraph geom_point_interactive
+#' @importFrom ggplot2 ggplot geom_text scale_x_date expansion labs scale_shape_manual scale_fill_manual theme_bw theme element_text guides guide_legend scale_size
+#' @importFrom glue glue
+#' @importFrom scales percent
+#' 
 #' @examples
 #' \dontrun{
 #' aspe_table_fiches %>% 
@@ -12,6 +19,8 @@
 #'   mef_tab_proba_esp_ipr() %>% 
 #'   plot_ipr_proba_esp_station()
 #' }
+#' 
+
 plot_ipr_proba_esp_station <- function(df){
   
   df <- 
@@ -24,42 +33,50 @@ plot_ipr_proba_esp_station <- function(df){
       couleur = ifelse(presence == "Pr\u00e9sence", "#009392FF", "#CF597EFF")) %>% 
     dplyr::arrange(esp_code_alternatif) %>% 
     dplyr::mutate(text = scales::percent(ppi_valeur_probabilite, accuracy = 1),
-           text = dplyr::if_else(text == '0%', NA, text),
-           pch_size = (log1p(ppi_param_effectif) / log1p(max(ppi_param_effectif))) + 3)
+                  text_interactive = paste0(esp_code_alternatif, "<br>",
+                                            presence, "<br>",
+                                            "proba.: ",scales::percent(ppi_valeur_probabilite, accuracy = 1),"<br>",
+                                            "eff.: ", ppi_param_effectif),
+                  text = dplyr::if_else(text == '0%', NA, text),
+                  pch_size = (log1p(ppi_param_effectif) / log1p(max(ppi_param_effectif))) + 3)
   
   ggplot2::ggplot(data = df,
-         aes(y = esp_code_alternatif,
-             x = ope_date)) +
-    ggplot2::geom_point(aes(size = pch_size,
-                   fill = presence,
-                   shape = presence)) +
+                  aes(y = esp_code_alternatif,
+                      x = ope_date)) +
+    ggiraph::geom_point_interactive(aes(size = pch_size,
+                                        fill = presence,
+                                        shape = presence,
+                                        tooltip = paste0("ope_id: ", ope_id, "<br>",
+                                                         "ope_date: ", ope_date, "<br>",
+                                                         text_interactive),
+                                        data_id = esp_code_alternatif)) +
     ggplot2::geom_text(aes(label = text),
-              hjust = -0.6,
-              vjust = 0.5, 
-              size=3,
-              fontface = 3) +
+                       hjust = -0.6,
+                       vjust = 0.5, 
+                       size = 3,
+                       fontface = 3) +
     ggplot2::scale_x_date(date_breaks = "1 year",
                           date_minor_breaks = "1 year",
                           date_labels = "%Y",
                           expand = ggplot2::expansion(mult = .05)) +
     ggplot2::labs(x = NULL,
-         y = NULL,
-         title = "Pr\u00e9sence / absence des taxons (avec probabilit\u00e9 de pr\u00e9sence associ\u00e9e) et nombre d\'individus captur\u00e9s (taille point proportionnelle)",
-         subtitle = glue::glue("{unique(df$sta_libelle_sandre)} ({unique(df$code_sta_pp)})"),
-         caption = "Les valeurs \u00e0 0% ne sont pas affich\u00e9es",
-         fill = NULL) +
+                  y = NULL,
+                  title = "Pr\u00e9sence / absence des taxons (avec probabilit\u00e9 de pr\u00e9sence associ\u00e9e) et nombre d\'individus captur\u00e9s (taille point proportionnelle)",
+                  subtitle = glue::glue("{unique(df$sta_libelle_sandre)} ({unique(df$code_sta_pp)})"),
+                  caption = "Les valeurs \u00e0 0% ne sont pas affich\u00e9es",
+                  fill = NULL) +
     ggplot2::scale_shape_manual(values = c(21, 22), guide = 'none') +
     ggplot2::scale_fill_manual(values = unique(df$couleur), guide="none") +
     ggplot2::theme_bw() +
     ggplot2::theme(
-      axis.text.y = ggplot2::element_text(face = 'bold', size=9),
-          plot.title = ggplot2::element_text(face = 'bold', size=9),
-          plot.subtitle = ggplot2::element_text(face = 'bold', size=9),
-          axis.text.x = ggplot2::element_text(angle = 45, hjust=1),
-          legend.position = 'top') +
+      axis.text.y = ggplot2::element_text(face = 'bold', size = 10),
+      plot.title = ggplot2::element_text(face = 'bold', size = 10),
+      plot.subtitle = ggplot2::element_text(face = 'bold', size = 10),
+      axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, size = 9),
+      legend.position = 'top') +
     ggplot2::guides(fill = ggplot2::guide_legend(override.aes=list(shape= c(21,22), size = 4))) +
     ggplot2::scale_size(guide = 'none')
-
+  
 }
 
 
