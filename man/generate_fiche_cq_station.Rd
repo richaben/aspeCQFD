@@ -26,6 +26,8 @@ generate_fiche_cq_station(
 \item{annee_debut}{l'année de début des données}
 
 \item{annee_fin}{l'année de fin des données}
+
+\item{interactive}{un booléen si les graphiques sont interactifs, FALSE par défaut}
 }
 \value{
 un ou des fichiers html dans le dossier de sortie spécifié

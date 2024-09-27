@@ -6,6 +6,7 @@
 #' @param auteur le nom de l'auteur de la fiche
 #' @param annee_debut l'année de début des données
 #' @param annee_fin l'année de fin des données
+#' @param interactive un booléen si les graphiques sont interactifs, FALSE par défaut
 #'
 #' @return un ou des fichiers html dans le dossier de sortie spécifié
 #' @export
