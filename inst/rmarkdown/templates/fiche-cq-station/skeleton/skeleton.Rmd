@@ -37,6 +37,7 @@ htmltools::img(src = knitr::image_uri('logo_OFB_v2.png'),
 > 
 > Les données couvrent la période de **`r params$annee_debut` à `r params$annee_fin`** (paramètres de filtres pour la génération de cette fiche). <br>
 > Les graphiques présentés ci-dessous ont pour vocation principale à la mise en qualité des données (et pas vraiment à l'analyse des variations sur les variables bancarisées). Les graphiques, confrontés entre eux, permettent de détecter d'éventuelles erreurs ou problèmes de cohérence dans les données. <br> 
+> Si l'option a été activée au moment de sa création, les graphiques sont interactifs, càd. des informations sont affichées au survol de la souris. <br>
 >
 
 ## Résumé des opérations
@@ -98,9 +99,14 @@ ope_list %>%
 ### Jours de pêche sur la station
 
 ```{r, fig.width=8, fig.height=4}
-ope_list %>% 
- plot_jour_peche() %>% 
-  ggiraph::girafe(ggobj = .) 
+if(params$interactive == TRUE){
+  ope_list %>% 
+    plot_jour_peche() %>% 
+    ggiraph::girafe(ggobj = .) 
+} else {
+  ope_list %>% 
+    plot_jour_peche()
+}
 ```
 
 ## Objectifs et protocole de pêche
