@@ -6,7 +6,8 @@
 #' @export
 #' 
 #' @importFrom dplyr select filter
-#' @importFrom ggplot2 ggplot geom_point geom_label ylab xlab scale_x_date theme_bw theme element_text labs
+#' @importFrom ggiraph geom_point_interactive geom_label_interactive
+#' @importFrom ggplot2 ggplot ylab xlab scale_x_date theme_bw theme element_text labs
 #' @importFrom ggtext element_textbox_simple
 #' @importFrom glue glue
 #' @importFrom stringr str_wrap
@@ -32,15 +33,22 @@ plot_habitat_data <- function(df){
                  values_to = "value",
                  values_transform = list(value = as.character)) %>% 
     {ggplot2::ggplot(., aes(x = ope_date, y = name)) +
-        ggplot2::geom_point(data = (. %>% dplyr::filter(is.na(value))), 
+        ggiraph::geom_point_interactive(data = (. %>% dplyr::filter(is.na(value))), 
                             shape=4, 
                             size=2.5, 
                             col='red',
                             alpha = 0.8,
                             stroke = 1.5, 
-                            show.legend =  F) +
-        ggplot2::geom_label(aes(label = stringr::str_wrap(value,10), 
-                                fill= value), 
+                            show.legend = F,
+                            aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                 "ope_date: ", ope_date),
+                                data_id = ope_id)) +
+        ggiraph::geom_label_interactive(
+          aes(label = stringr::str_wrap(value,10), 
+                                fill= value,
+              tooltip = paste0("ope_id: ", ope_id,"<br>",
+                               "ope_date: ", ope_date),
+              data_id = ope_id), 
                             alpha=0.5, 
                             show.legend = F, 
                             size=2.5) +

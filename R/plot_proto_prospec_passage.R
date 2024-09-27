@@ -6,11 +6,13 @@
 #' @return un graphique ggplot2
 #' @export
 #'
-#' @importFrom dplyr select group_by mutate case_when filter
-#' @importFrom ggplot2 ggplot geom_point ylab xlab scale_x_date theme_bw scale_shape_manual theme element_text labs geom_bar scale_fill_manual element_blank
+#' @importFrom dplyr select mutate recode distinct group_by case_when filter
+#' @importFrom ggiraph geom_point_interactive geom_bar_interactive
+#' @importFrom ggplot2 ggplot ylab xlab scale_x_date theme_bw scale_shape_manual theme element_text labs expansion scale_fill_manual element_blank
+#' @importFrom ggtext element_textbox_simple
 #' @importFrom glue glue
 #' @importFrom patchwork wrap_plots
-#' @importFrom stringr str_detect str_wrap
+#' @importFrom stringr str_wrap str_detect
 #' @importFrom tidyr pivot_longer
 #' 
 #' @examples
@@ -77,7 +79,10 @@ plot_proto_prospec_passage <- function(df){
                              x = ope_date, 
                              shape = name, 
                              fill = name)) +
-      ggplot2::geom_point(col='black',size=3.5, alpha = 0.8, show.legend = F) +
+      ggiraph::geom_point_interactive(col='black',size=3.5, alpha = 0.8, show.legend = F,
+                                      aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                           "ope_date: ", ope_date),
+                                          data_id = ope_id)) +
       ggplot2::ylab(NULL) +
       ggplot2::xlab(NULL) +
       # ggplot2::scale_x_continuous(breaks = unique(df_part1$annee),
@@ -106,7 +111,10 @@ plot_proto_prospec_passage <- function(df){
       df %>% 
       dplyr::filter(!is.na(grp_tgp_id)) %>%
       ggplot2::ggplot(.,  aes(x = ope_date, y = grp_nombre, fill= grp_tgp_id)) +
-          ggplot2::geom_bar(stat="identity", width = 90, col='black', linewidth = 0.2, alpha = 0.8) +
+          ggiraph::geom_bar_interactive(stat="identity", width = 90, col='black', linewidth = 0.2, alpha = 0.8,
+                                        aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                             "ope_date: ", ope_date),
+                                            data_id = ope_id)) +
           ggplot2::ylab(NULL) +
           ggplot2::xlab("Ann\u00e9es") + 
           # ggplot2::scale_x_continuous(breaks = unique(df$annee),
@@ -117,8 +125,7 @@ plot_proto_prospec_passage <- function(df){
                             date_minor_breaks = "1 year",
                             date_labels = "%Y",
                             limits = c(min(df$ope_date)-120,
-                                       max(df$ope_date)+120)
-      ) + 
+                                       max(df$ope_date)+120)) + 
       
           ggplot2::theme_bw() +
           ggplot2::scale_fill_manual(values=c('#4ECDC4','#999999')) +
@@ -161,7 +168,10 @@ plot_proto_prospec_passage <- function(df){
                               x = ope_date, 
                               shape = name, 
                               fill = name)) +
-          ggplot2::geom_point(col='black',size=3.5, alpha = 0.8, show.legend = F) +
+          ggiraph::geom_point_interactive(col='black',size=3.5, alpha = 0.8, show.legend = F,
+                                          aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                               "ope_date: ", ope_date),
+                                              data_id = ope_id)) +
           ggplot2::ylab(NULL) +
           ggplot2::xlab(NULL) +
           ggplot2::theme_bw() +

@@ -99,20 +99,34 @@ ope_list %>%
 
 ```{r, fig.width=8, fig.height=4}
 ope_list %>% 
- plot_jour_peche()
+ plot_jour_peche() %>% 
+  ggiraph::girafe(ggobj = .) 
 ```
 
 ## Objectifs et protocole de pêche
 
-```{r, fig.width=11, fig.height=4}
-df_station %>% 
-  plot_objectif_reseau()
+```{r, fig.width=10, fig.height=4}
+if(params$interactive == TRUE){
+  df_station %>% 
+    plot_objectif_reseau() %>% 
+    ggiraph::girafe(ggobj = .) 
+} else {
+  df_station %>% 
+    plot_objectif_reseau()
+}
 ```
 
-```{r, fig.width=11, fig.height=6}
-df_station %>% 
-  select_infos_context() %>% 
-  plot_infos_context()
+```{r, fig.width=10, fig.height=6}
+if(params$interactive == TRUE){
+  df_station %>% 
+    select_infos_context() %>% 
+    plot_infos_context() %>% 
+    ggiraph::girafe(ggobj = .) 
+} else {
+  df_station %>% 
+    select_infos_context() %>% 
+    plot_infos_context()
+}
 ```
 
 
@@ -120,15 +134,27 @@ df_station %>%
 ### Description pêche
 
 ```{r, fig.width=10, fig.height=6}
-df_station_ope_env %>% 
-  plot_proto_prospec_passage()
+if(params$interactive == TRUE){
+  df_station_ope_env %>% 
+    plot_proto_prospec_passage() %>% 
+    ggiraph::girafe(ggobj = .) 
+} else {
+  df_station_ope_env %>%
+    plot_proto_prospec_passage()
+}
 ```
 
 ### Descriptions pêche et environnement
 
 ```{r, fig.width=10, fig.height=10}
-df_station_ope_env %>% 
-  plot_descript_peche_env()
+if(params$interactive == TRUE){
+  df_station_ope_env %>% 
+    plot_descript_peche_env() %>% 
+    ggiraph::girafe(ggobj = .) 
+} else{
+  df_station_ope_env %>% 
+    plot_descript_peche_env()
+}
 ```
 
 
@@ -136,15 +162,27 @@ df_station_ope_env %>%
 ### faciès
 
 ```{r, fig.width=10, fig.height=9}
-df_station_ope_env %>% 
-  plot_facies_data()
+if(params$interactive == TRUE){
+  df_station_ope_env %>% 
+    plot_facies_data() %>% 
+    ggiraph::girafe(ggobj = .) 
+} else{
+  df_station_ope_env %>% 
+    plot_facies_data()
+}
 ```
 
 ### habitat
 
 ```{r, fig.width=10, fig.height=8.5}
-df_station_ope_env %>% 
-   plot_habitat_data()
+if(params$interactive == TRUE){
+  df_station_ope_env %>% 
+    plot_habitat_data() %>% 
+    ggiraph::girafe(ggobj = .) 
+} else{
+  df_station_ope_env %>% 
+    plot_habitat_data()
+}
 ```
 
 
@@ -153,12 +191,12 @@ df_station_ope_env %>%
 
 ```{r, fig.height=6.5, fig.width=10}
 if(params$interactive == TRUE){
-df_station_peuplement %>%
-  plot_peuplement_data() %>% 
+  df_station_peuplement %>%
+    plot_peuplement_data() %>% 
     ggiraph::girafe(ggobj = .)
 } else {
   df_station_peuplement %>%
-  plot_peuplement_data()
+    plot_peuplement_data()
 }
 ```
 

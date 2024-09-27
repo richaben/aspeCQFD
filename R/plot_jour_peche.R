@@ -12,6 +12,7 @@
 #' @importFrom ggrepel geom_label_repel
 #' @importFrom glue glue
 #' @importFrom lubridate yday
+#' @importFrom ggiraph geom_jitter_interactive geom_point_interactive
 #'
 #' @examples
 #' \dontrun{
@@ -32,8 +33,11 @@ plot_jour_peche <- function(df, jour_julien = F){
   
   if(jour_julien == FALSE){
     ggplot2::ggplot(data = df) + 
-      ggplot2::geom_jitter(data = df,
-                           ggplot2::aes(x = ope_date2, y = code_sta_pp),
+      ggiraph::geom_jitter_interactive(data = df,
+                           ggplot2::aes(x = ope_date2, y = code_sta_pp,
+                                        tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                         "ope_date: ", ope_date),
+                                        data_id = ope_id),
                            size = 3, 
                            pch = 21, 
                            show.legend = F, 
@@ -41,8 +45,11 @@ plot_jour_peche <- function(df, jour_julien = F){
                            alpha = 0.6,
                            width = 0.001) +
       
-      ggplot2::geom_point(data = df %>% dplyr::group_by(code_sta_pp) %>% dplyr::filter(ope_date == max(ope_date)), 
-                          ggplot2::aes(x = ope_date2, y = code_sta_pp),
+      ggiraph::geom_point_interactive(data = df %>% dplyr::group_by(code_sta_pp) %>% dplyr::filter(ope_date == max(ope_date)), 
+                          ggplot2::aes(x = ope_date2, y = code_sta_pp,
+                                       tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                        "ope_date: ", ope_date),
+                                       data_id = ope_id),
                           size = 4, 
                           pch = 23, 
                           fill = 'transparent') +
@@ -94,8 +101,11 @@ plot_jour_peche <- function(df, jour_julien = F){
         ymax = Inf,
         alpha = 0.3
       ) +
-      ggplot2::geom_jitter(data = df,
-                           ggplot2::aes(x = jour_julien, y = code_sta_pp),
+      ggiraph::geom_jitter_interactive(data = df,
+                           ggplot2::aes(x = jour_julien, y = code_sta_pp,
+                                        tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                         "ope_date: ", ope_date),
+                                        data_id = ope_id),
                            size = 3, 
                            pch = 21, 
                            show.legend = F, 
@@ -103,8 +113,11 @@ plot_jour_peche <- function(df, jour_julien = F){
                            alpha = 0.6,
                            width = 0.001) +
       
-      ggplot2::geom_point(data = df %>% dplyr::group_by(code_sta_pp) %>% dplyr::filter(ope_date == max(ope_date)), 
-                          ggplot2::aes(x = jour_julien, y = code_sta_pp),
+      ggiraph::geom_point_interactive(data = df %>% dplyr::group_by(code_sta_pp) %>% dplyr::filter(ope_date == max(ope_date)), 
+                          ggplot2::aes(x = jour_julien, y = code_sta_pp,
+                                       tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                                                         "ope_date: ", ope_date),
+                                       data_id = ope_id),
                           size = 4, 
                           pch = 23, 
                           fill = "white") +

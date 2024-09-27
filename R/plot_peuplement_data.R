@@ -63,7 +63,7 @@ plot_peuplement_data <- function(df){
                           alpha = 0.8,
                           aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
                                            "ope_date: ", ope_date, "<br>",
-                                           esp_code_alternatif, "<br>",
+                                           esp_code_alternatif," (eff: ", lop_effectif, ")<br>",
                                            tpe_libelle
                                            ),
                           data_id = paste0(ope_id, tpe_libelle))) +

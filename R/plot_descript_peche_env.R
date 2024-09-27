@@ -6,7 +6,8 @@
 #' @export
 #'
 #' @importFrom dplyr select mutate
-#' @importFrom ggplot2 ggplot geom_bar facet_wrap ylab xlab theme_bw scale_x_continuous theme element_text geom_point geom_label
+#' @importFrom ggiraph geom_bar_interactive geom_point_interactive geom_label_interactive
+#' @importFrom ggplot2 ggplot facet_wrap ylab xlab theme_bw scale_x_date theme element_text expansion
 #' @importFrom ggtext element_textbox_simple
 #' @importFrom patchwork wrap_plots plot_layout
 #' @importFrom stringr str_wrap
@@ -18,6 +19,7 @@
 #'   dplyr::filter(code_sta_pp == "03231000_013") %>%
 #'   plot_descript_peche_env()
 #'   }
+
 
 plot_descript_peche_env <- function(df){
   # plot1_inspection_valeurs
@@ -74,10 +76,13 @@ plot_descript_peche_env <- function(df){
     dplyr::mutate(#annee = as.factor(annee),
            name = stringr::str_wrap(gsub(replacement = " ", pattern = '_', name), 20)) %>% 
     {ggplot2::ggplot(., aes(y = value, x = ope_date)) + 
-        ggplot2::geom_bar(col='black', 
+        ggiraph::geom_bar_interactive(col='black', 
                           linewidth= 0.2, 
                           fill = '#79BD9A', 
-                          stat="identity") +
+                          stat="identity",
+                          aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                               "ope_date: ", ope_date),
+                              data_id = ope_id)) +
         #scale_y_continuous(breaks = integer_breaks()) +
         ggplot2::facet_wrap(~name, scales = 'free_y', ncol = 2) +
         ggplot2::ylab(NULL) +
@@ -87,7 +92,8 @@ plot_descript_peche_env <- function(df){
         #                             minor_breaks = 1) +
         ggplot2::scale_x_date(date_breaks = "1 year", 
                               date_minor_breaks = "1 year",
-                              date_labels = "%Y") + 
+                              date_labels = "%Y",
+                              expand = ggplot2::expansion(mult = .05)) + 
         ggplot2::theme(
           strip.text.x = ggplot2::element_text(face = 'bold', size = 9),
           axis.text.y = ggplot2::element_text(face = 'bold',size=9),
@@ -113,10 +119,13 @@ plot_descript_peche_env <- function(df){
     dplyr::mutate(
       name = stringr::str_wrap(gsub(replacement = " ", pattern = '_', name), 20)) %>% 
     {ggplot2::ggplot(., aes(y = value, x = ope_date)) + 
-        ggplot2::geom_bar(col='black', 
+        ggiraph::geom_bar_interactive(col='black', 
                           linewidth= 0.2, 
                           fill = '#61a5c2', 
-                          stat="identity"
+                          stat="identity",
+                          aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                               "ope_date: ", ope_date),
+                              data_id = ope_id)
                           ) +
         ggplot2::facet_wrap(~name, scales = 'free_y', ncol = 2) +
         ggplot2::ylab(NULL) +
@@ -126,7 +135,8 @@ plot_descript_peche_env <- function(df){
         #                             minor_breaks = 1) +
         ggplot2::scale_x_date(date_breaks = "1 year", 
                               date_minor_breaks = "1 year",
-                              date_labels = "%Y") + 
+                              date_labels = "%Y",
+                              expand = ggplot2::expansion(mult = .05)) + 
         ggplot2::theme(
           strip.text.x = ggplot2::element_text(face = 'bold', size = 9),
           axis.text.y = ggplot2::element_text(face = 'bold',size=9),
@@ -148,8 +158,15 @@ plot_descript_peche_env <- function(df){
     mutate(value = stringr::str_wrap(value, 10)) %>% 
     {
       ggplot2::ggplot(., aes(y = name, x = ope_date)) + 
-        ggplot2::geom_point(data = (. %>% filter(is.na(value))), shape=4, size=2.8, col='red',stroke = 2, show.legend =  F) +
-        ggplot2::geom_label(aes(label = value, fill=value), alpha=0.5, show.legend = F, size=2.5) +
+        ggiraph::geom_point_interactive(data = (. %>% filter(is.na(value))), 
+                                        shape=4, size=2.8, col='red',stroke = 2, show.legend =  F,
+                                        aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                             "ope_date: ", ope_date),
+                                            data_id = ope_id)) +
+        ggiraph::geom_label_interactive(aes(label = value, fill=value,
+                                            tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                             "ope_date: ", ope_date),
+                                            data_id = ope_id), alpha=0.5, show.legend = F, size=2.5) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
         ggplot2::theme_bw() +
@@ -157,7 +174,8 @@ plot_descript_peche_env <- function(df){
         #                             minor_breaks = 1) +
         ggplot2::scale_x_date(date_breaks = "1 year", 
                               date_minor_breaks = "1 year",
-                              date_labels = "%Y") + 
+                              date_labels = "%Y",
+                              expand = ggplot2::expansion(mult = .05)) + 
         ggplot2::theme(
           axis.text.y = ggplot2::element_text(face = 'bold',size=9),
           title = ggplot2::element_text(face = 'bold', size=9),

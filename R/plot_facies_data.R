@@ -5,9 +5,10 @@
 #' @return un graphique ggplot2
 #' @export
 #' 
-#' @importFrom dplyr select mutate case_when filter distinct
+#' @importFrom dplyr select distinct mutate case_when filter
 #' @importFrom forcats fct_rev
-#' @importFrom ggplot2 ggplot geom_point scale_shape_manual scale_color_manual ylab xlab scale_x_date theme_bw theme element_text labs geom_label facet_wrap geom_bar
+#' @importFrom ggiraph geom_point_interactive geom_label_interactive geom_bar_interactive
+#' @importFrom ggplot2 ggplot scale_shape_manual scale_color_manual ylab xlab scale_x_date theme_bw theme element_text labs facet_wrap
 #' @importFrom ggtext element_textbox_simple
 #' @importFrom glue glue
 #' @importFrom patchwork wrap_plots plot_layout
@@ -21,7 +22,6 @@
 #'   plot_facies_data()
 #' }
 #' 
-
 plot_facies_data <- function(df){
   
   df <-
@@ -59,10 +59,15 @@ plot_facies_data <- function(df){
                             y = forcats::fct_rev(fac_tyf_id), 
                             shape = pch_tyf, 
                             col=pch_tyf)) +
-        ggplot2::geom_point(size=3.5, 
+        ggiraph::geom_point_interactive(size=3.5, 
                             show.legend = F, 
                             fill= '#99B2B7', 
-                            stroke= 1) +
+                            stroke= 1,
+                            aes(
+                              tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                               "ope_date: ", ope_date),
+                              data_id = ope_id
+                            )) +
         ggplot2::scale_shape_manual(values = c(21,4)) +
         ggplot2::scale_color_manual(values = c('black','red'))+
         ggplot2::ylab(NULL) +
@@ -97,14 +102,24 @@ plot_facies_data <- function(df){
                         values_transform = list(value = as.character)) %>% 
     dplyr::filter(!is.na(fac_tyf_id)) %>% 
     {ggplot2::ggplot(., aes(x = ope_date, y = name)) +
-        ggplot2::geom_point(data = (. %>% dplyr::filter(is.na(value))), 
+        ggiraph::geom_point_interactive(data = (. %>% dplyr::filter(is.na(value))), 
                             shape=4, 
                             size=2.5, 
                             col='black',
                             alpha = 0.8,
                             stroke = 1.5, 
-                            show.legend =  F) +
-        ggplot2::geom_label(aes(label = stringr::str_wrap(value, 20), fill= value), 
+                            show.legend = F,
+                            aes(
+                              tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                               "ope_date: ", ope_date),
+                              data_id = ope_id
+                            )) +
+        ggiraph::geom_label_interactive(aes(label = stringr::str_wrap(value, 20), fill= value,
+                                
+                                  tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                   "ope_date: ", ope_date),
+                                  data_id = ope_id
+                                ), 
                             alpha=0.5, 
                             show.legend = F, 
                             size=2.3) +
@@ -141,7 +156,14 @@ plot_facies_data <- function(df){
     {ggplot2::ggplot(., aes(x = ope_date, 
                             y = fac_importance_relative, 
                             fill = fac_tyf_id) ) +
-        ggplot2::geom_bar(stat="identity", col='black', linewidth = 0.2, alpha = 0.8) +
+        ggiraph::geom_bar_interactive(
+          stat="identity", 
+          col='black', 
+          linewidth = 0.2, 
+          alpha = 0.8,
+          aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
+                               "ope_date: ", ope_date),
+              data_id = ope_id)) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +
         #ggplot2::scale_x_continuous(breaks = unique(.$annee)) +

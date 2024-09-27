@@ -6,7 +6,8 @@
 #' @export
 #' 
 #' @importFrom dplyr select
-#' @importFrom ggplot2 ggplot geom_point ylab xlab theme_bw scale_shape_manual scale_x_date theme element_text labs
+#' @importFrom ggiraph geom_point_interactive
+#' @importFrom ggplot2 ggplot ylab xlab theme_bw scale_shape_manual scale_x_date theme element_text labs
 #' @importFrom ggtext element_textbox_simple
 #' @importFrom glue glue
 #' @importFrom stringr str_wrap
@@ -39,9 +40,12 @@ plot_objectif_reseau <- function(df){
                             x = ope_date, 
                             shape = value, 
                             fill = value)) +
-        ggplot2::geom_point(col='black', 
+        ggiraph::geom_point_interactive(col='black', 
                             size=4, 
-                            show.legend = F) +
+                            show.legend = F,
+                            aes(tooltip = paste0("ope_id: ", ope_id,"<br>",
+                                                 "ope_date: ", ope_date),
+                                data_id = ope_id)) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab("Ann\u00e9es") +
         ggplot2::theme_bw() +
