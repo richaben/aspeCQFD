@@ -9,6 +9,7 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  eval = FALSE,
   collapse = TRUE,
   comment = "#>"
 )
@@ -42,7 +43,7 @@ rm(aspe_tables, aspe_mei)
 
 Des fonctions spécifiques à la création des tableaux pour les fiches CQ sont disponibles dans le package `aspeCQFD`.
 
-```{r, echo = FALSE}
+```{r}
 ### 1/ table de base
 aspe_table_fiches <-
   mef_creer_table_base_fiches()
@@ -58,4 +59,18 @@ aspe_table_fiches_ope_env <-
 ```
 
 ## Choisir une station
+
+```{r}
+generate_fiche_cq_station(stations = c("03231000_013"#, 
+                                       #"03174000_005", 
+                                       #"03112710_005"
+                                       ),
+                          dossier_sortie = "D:/fiches_CQ/",
+                          df_data = aspe_table_fiches,
+                          auteur = "Jean Dupont",
+                          annee_debut = 2007,
+                          annee_fin = 2022,
+                          interactive = T)
+
+```
 
