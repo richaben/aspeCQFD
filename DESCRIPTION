@@ -28,6 +28,7 @@ Imports:
     rmarkdown,
     scales,
     stringr,
+    tibble,
     tidyr
 Remotes: 
   PascalIrz/aspe

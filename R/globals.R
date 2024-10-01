@@ -54,5 +54,7 @@ globalVariables(unique(c(
   # select_infos_context: 
   "annee", "code_sta_pp", "ope_amplitude_thermique_air_station_cerema", "ope_cap_id", "ope_date", "ope_durete_totale", "ope_espece_ciblee", "ope_id", "ope_niveau_typologique_theorique", "ope_pente_ligne_eau", "ope_precipitation_bassin_versant_cerema", "ope_section_mouillee", "ope_temp_air_bassin_versant_cerema", "ope_temp_max_moyenne_eau", "ope_temperature_air_station_cerema", "sta_libelle_sandre", 
   # tab_col_class_ipr: 
-  "classe_ipr", "cli_altitude_min", "cli_borne_inf", "cli_borne_sup", "cli_classe", "cli_libelle"
+  "classe_ipr", "cli_altitude_min", "cli_borne_inf", "cli_borne_sup", "cli_classe", "cli_libelle",
+  # mef_creer_ttes_tables_fichesCQ:
+  "cli_id"
 )))

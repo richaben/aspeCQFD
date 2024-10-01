@@ -16,6 +16,11 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+# install.packages("pak")
+pak::pak(c("pascalirz/aspe",
+           "richaben/aspeCQFD"))
+
+library(aspe) 
 library(aspeCQFD)
 ```
 
@@ -41,7 +46,23 @@ rm(aspe_tables, aspe_mei)
 
 ### 2) Constituer les tableaux nécessaires
 
-Des fonctions spécifiques à la création des tableaux pour les fiches CQ sont disponibles dans le package `aspeCQFD`.
+Plusieurs tableaux de données sont nécessaires pour la création des fiches CQ stations, pouvant être créés individuellement.
+
+Une fonction inclue dans le package {aspeCQFD} permet de créer en une fois l'ensemble des tables nécessaires.
+
+```{r}
+data_fichesCQ <-
+  mef_creer_tables_fichesCQ()
+```
+
+La liste des tables individuelles est la suivante :
+
+1. table de base, avec les informations sur les dates, objectifs de pêches, intervenants, codes sandre, protocole, etc... (`aspeCQFD::mef_creer_table_base_fiches()`) ;
+1. table avec les données des opérations (`aspeCQFD::mef_creer_table_ope_env()` + `aspeCQFD::mef_ajouter_facies()` ) ;
+1. table avec les données sur les peuplements piscicoles (`aspeCQFD::mef_creer_table_ope_env()` + `aspeCQFD::mef_ajouter_facies()` ) ;
+1. table avec les données ipr des stations ;
+1. table avec les données des paramètres pour calculs de l'ipr ;
+1. table avec les données sur les probabilités des espèces issues des notes ipr.
 
 ```{r}
 ### 1/ table de base
@@ -55,8 +76,45 @@ aspe_table_fiches_ope_env <-
   mef_ajouter_facies()
 
 ### 3/ table avec les données poissons
+aspe_table_fiches_peuplement <-
+  aspe_table_fiches %>% 
+  mef_creer_table_peuplement()
+
+### 4/ table avec les données ipr
+aspe_table_fiches_ipr <-
+  aspe_table_fiches_peuplement %>% 
+  dplyr::select(code_sta_pp, 
+                sta_libelle_sandre, 
+                ope_id, 
+                annee, 
+                ope_date,
+                ipr,
+                cli_id,
+                cli_libelle) %>% 
+  dplyr::distinct() %>% 
+  aspe::mef_ajouter_metriques() 
+
+### 5/ table avec les données env. associées à l'ipr
+aspe_table_fiches_ipr_env <-
+  aspe_table_fiches %>% 
+  dplyr::select(code_sta_pp, 
+                sta_libelle_sandre, 
+                ope_id, 
+                annee, 
+                ope_date,
+                pop_id) %>% 
+  dplyr::distinct() %>% 
+  aspe::mef_ajouter_ope_env()
+
+### 6/ table avec les données proba espèces associées à l'ipr
+aspe_table_proba_esp_ipr <-
+  aspe_table_fiches %>%
+  mef_tab_proba_esp_ipr()
 
 ```
+
+
+
 
 ## Choisir une station
 
