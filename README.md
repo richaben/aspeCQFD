@@ -45,10 +45,3 @@ summary(cars)
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
 up-to-date. `devtools::build_readme()` is handy for this.
-
-``` r
-htmltools::tags$iframe("./man/figures/fiche_CQ_donnees_station_03174000_005.html",
-                       height=600, width="100%", `data-external` = 1)
-```
-
-<iframe height="600" width="100%" data-external="1">./man/figures/fiche_CQ_donnees_station_03174000_005.html</iframe>
