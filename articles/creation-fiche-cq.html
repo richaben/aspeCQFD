@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Créer une fiche CQ pour une station • aspeCQFD</title>
+<title>Créer des fiches CQ pour des stations • aspeCQFD</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Créer une fiche CQ pour une station">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Créer des fiches CQ pour des stations">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -33,7 +33,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/creation-fiche-cq.html">Créer une fiche CQ pour une station</a></li>
+<li><a class="dropdown-item" href="../articles/creation-fiche-cq.html">Créer des fiches CQ pour des stations</a></li>
   </ul>
 </li>
       </ul>
@@ -54,7 +54,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Créer une fiche CQ pour une station</h1>
+      <h1>Créer des fiches CQ pour des stations</h1>
             
       
 
@@ -71,6 +71,7 @@
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pascalirz/aspe"</span>,</span>
 <span>           <span class="st">"richaben/aspeCQFD"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># chargement des packages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/PascalIrz/aspe/" class="external-link">aspe</a></span><span class="op">)</span> </span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://richaben.github.io/aspeCQFD/">aspeCQFD</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -83,9 +84,9 @@
 <p>Une copie de la base de données ASPE sous format <code>Rdata</code>
 est nécessaire, devant comprendre l’ensemble des tables et mesures
 individuelles. Ces fichiers <code>Rdata</code> sont à créer avec les
-fonctions dédiées du package <code>aspe</code> (<a href="https://github.com/PascalIrz/aspe" class="external-link">cf. https://github.com/PascalIrz/aspe</a>).</p>
-<p>Par exemple (⚠ <strong>chemin vers les données ASPE à adapter selon
-votre arborescence</strong>):</p>
+fonctions dédiées du package <code>aspe</code> (cf. <a href="https://github.com/PascalIrz/aspe" class="external-link">https://github.com/PascalIrz/aspe</a>).</p>
+<p>Par exemple (⚠ <em>chemin vers les données ASPE à adapter selon votre
+arborescence</em>):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aspe_tables</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">aspe</span><span class="fu">::</span><span class="fu"><a href="https://pascalirz.github.io/aspe/reference/misc_nom_dernier_fichier.html" class="external-link">misc_nom_dernier_fichier</a></span><span class="op">(</span>repertoire <span class="op">=</span> <span class="st">"D:/1_database/ASPE/database_aspe/processed_data"</span>,</span>
@@ -104,8 +105,8 @@ votre arborescence</strong>):</p>
 <p>La mise en forme de plusieurs tables de données est nécessaire pour
 la création des fiches CQ stations (contenant les éléments utilisés pour
 les fiches). Ces tables peuvent être créées de façon individuelle
-(cf. plus bas) ; mais une fonction du package {aspeCQFD} permet de créer
-en une fois l’ensemble des tables nécessaires.</p>
+(cf. ci-dessous) ; mais une fonction du package {aspeCQFD} permet de
+créer en une fois l’ensemble des tables nécessaires.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_fichesCQ</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/mef_creer_ttes_tables_fichesCQ.html">mef_creer_ttes_tables_fichesCQ</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -122,7 +123,7 @@ de l’ipr ;</li>
 notes ipr.</li>
 </ol>
 <p>Si l’on souhaite créer les tables individuellement, voici comment
-procéder :</p>
+procéder à partir des fonctions du packages :</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### 1/ table de base</span></span>
 <span><span class="va">aspe_table_fiches</span> <span class="op">&lt;-</span></span>
@@ -179,14 +180,13 @@ procéder :</p>
 <code>point de prélèvement</code> poisson associé. Par exemple, si l’on
 prend l’exemple de la station <a href="https://www.sandre.eaufrance.fr/geo/StationMesureEauxSurface/03231000" class="external-link"><em>DIVES
 A SAINT-SANSON 1</em></a>, son <code>code Sandre</code> est
-<strong><code>03231000</code></strong> et le
-<code>point de prélèvement</code> poisson associé est
-<strong><code>013</code></strong>.</p>
-<p>La fonction <code>generate_fiche_cq_station</code> permet de générer
-une ou plusieurs fiches CQ de station(s). Elle a été pensé pour pouvoir
-sélectionner une période de temps voulue pour inspecter les données
-bancarisées sur la station (→ dans le but de la mise en qualité des
-données !)</p>
+<code>03231000</code> et le <code>point de prélèvement</code> poisson
+associé est <code>013</code>.</p>
+<p>La fonction <code><a href="../reference/generate_fiche_cq_station.html">generate_fiche_cq_station()</a></code> permet de
+générer une ou plusieurs fiches CQ de station(s). Elle permet notamment
+de sélectionner une période de dates voulues pour inspecter les données
+bancarisées sur la station (→ <em>dans le but de la mise en qualité des
+données</em> !)</p>
 <p>Cette fonction prend en entrée les arguments suivants :</p>
 <ul>
 <li>
@@ -217,8 +217,8 @@ produites seront sous format interactif ou non (ex. pour faciliter la
 lecture et l’inspection).</li>
 </ul>
 <blockquote>
-<p>Pour générer deux fiches sur deux stations sur la période 2007 à 2022
-:</p>
+<p><em>Exemple: pour générer deux fiches sur deux stations sur la
+période 2007 à 2022</em> :</p>
 </blockquote>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/generate_fiche_cq_station.html">generate_fiche_cq_station</a></span><span class="op">(</span>stations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"03231000_013"</span>, </span>
@@ -229,8 +229,6 @@ lecture et l’inspection).</li>
 <span>                          annee_debut <span class="op">=</span> <span class="fl">2014</span>,</span>
 <span>                          annee_fin <span class="op">=</span> <span class="fl">2022</span>,</span>
 <span>                          interactive <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
-<iframe src="docs/figures/fiche_CQ_donnees_station_03174000_005.html" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" data-external="1">
-</iframe>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
