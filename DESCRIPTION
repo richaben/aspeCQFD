@@ -36,3 +36,4 @@ Suggests:
     htmltools,
     knitr
 VignetteBuilder: knitr
+URL: https://richaben.github.io/aspeCQFD/
