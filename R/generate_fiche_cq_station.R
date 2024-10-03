@@ -34,6 +34,13 @@ generate_fiche_cq_station <- function(stations,
   options(future.rng.onMisuse = "ignore")
   cli::cli_alert_info("Cr\u00e9ation des fiches CQ stations")
   
+  aspe_table_fiches <- df_data[[1]]
+  aspe_table_fiches_ope_env <- df_data[[2]]
+  aspe_table_fiches_peuplement <- df_data[[3]]
+  aspe_table_fiches_ipr <- df_data[[4]]
+  aspe_table_fiches_ipr_env <- df_data[[5]]
+  aspe_table_proba_esp_ipr <- df_data[[6]]
+
   progressr::with_progress({
     
     p <- progressr::progressor(steps = length(stations))

@@ -33,7 +33,7 @@ library(aspeCQFD)
 
 Une copie de la base de données ASPE sous format `Rdata` est nécessaire, devant comprendre l'ensemble des tables et mesures individuelles. Ces fichiers `Rdata` sont à créer avec les fonctions dédiées du package `aspe` ([cf. https://github.com/PascalIrz/aspe](https://github.com/PascalIrz/aspe)).
 
-Par exemple :
+Par exemple (⚠ **chemin vers les données ASPE à adapter selon votre arborescence**):
 
 ```{r}
 aspe_tables <-
@@ -134,7 +134,7 @@ Cette fonction prend en entrée les arguments suivants :
   - `interactive` : un argument booléen (`FALSE` ou `TRUE`) pour définir si les graphiques dans les fiches produites seront sous format interactif ou non (ex. pour faciliter la lecture et l'inspection).
 
 
-> Exemple pour deux stations sur la période 2007 à 2022 :
+> Pour générer deux fiches sur deux stations sur la période 2007 à 2022 :
 
 ```{r}
 generate_fiche_cq_station(stations = c("03231000_013", 
@@ -142,18 +142,18 @@ generate_fiche_cq_station(stations = c("03231000_013",
                           dossier_sortie = "D:/fiches_CQ/",
                           df_data = data_fichesCQ,
                           auteur = "Jean Dupont",
-                          annee_debut = 2007,
+                          annee_debut = 2014,
                           annee_fin = 2022,
                           interactive = T)
 ```
 
-#### Exemple sur une station
+#### Exemple sur une station (03174000_005) sur la période 2014 à 2022
 
 ```{r, echo=FALSE, eval=T}
 htmltools::tags$iframe(title = "Exemple fiche", 
                        height = 600, 
                        width = 800,
-                       src = system.file("exemples", "fiche_CQ_donnees_station_03231000_013.html",
+                       src = system.file("exemples", "fiche_CQ_donnees_station_03174000_005.html",
                                          package = "aspeCQFD"))
 ```
 

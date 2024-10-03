@@ -1,7 +1,7 @@
 ---
 title: "Fiche CQ données ASPE - Station `r params$code_station`"
 author: "`r params$auteur`"
-subtitle: "`r unique(df_data[df_data$code_sta_pp %in% params$code_station,]$sta_libelle_sandre)`"
+subtitle: "`r unique(aspe_table_fiches[aspe_table_fiches$code_sta_pp %in% params$code_station,]$sta_libelle_sandre)`"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output: 
   html_document :
@@ -10,7 +10,6 @@ output:
     toc: false
     css: 'ofb_theme_html.css'
 params:
-  df_data: NULL
   code_station: "03174000_005"
   auteur: "DR Normandie"
   annee_debut: 1995
@@ -271,4 +270,3 @@ ope_list %>%
   unique() %>% 
   knitr::kable()
 ```
-
