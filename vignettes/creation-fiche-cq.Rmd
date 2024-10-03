@@ -148,4 +148,4 @@ generate_fiche_cq_station(stations = c("03231000_013",
 ```
 
 
-<iframe src="figures/fiche_CQ_donnees_station_03174000_005.html" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen="" allow="autoplay" data-external="1"></iframe>
+<iframe src="docs/figures/fiche_CQ_donnees_station_03174000_005.html" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen="" allow="autoplay" data-external="1"></iframe>
