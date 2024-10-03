@@ -45,7 +45,3 @@ summary(cars)
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
 up-to-date. `devtools::build_readme()` is handy for this.
-
-#### Exemple sur une station (03174000_005) sur la période 2014 à 2022
-
-<iframe title="Exemple fiche" height="600" width="800" src=""></iframe>
