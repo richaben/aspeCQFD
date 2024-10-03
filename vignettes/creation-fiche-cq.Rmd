@@ -2,7 +2,7 @@
 title: "Comment créer une fiche CQ pour une station ?"
 output: rmarkdown::html_vignette
 resource_files:
-  - inst/doc/fiche_CQ_donnees_station_03174000_005.html
+  - fiche_CQ_donnees_station_03174000_005.html
 vignette: >
   %\VignetteIndexEntry{creation-fiche-cq}
   %\VignetteEngine{knitr::rmarkdown}
@@ -152,9 +152,9 @@ generate_fiche_cq_station(stations = c("03231000_013",
 #### Exemple sur une station (03174000_005) sur la période 2014 à 2022
 
 ```{r, echo=FALSE, eval=T}
-htmltools::tags$iframe(title = "Exemple fiche", 
+htmltools::tags$iframe(#title = "Exemple fiche", 
                        height = 600, 
                        width = 800,
-                       src = system.file("doc/fiche_CQ_donnees_station_03174000_005.html",
+                       src = system.file("fiche_CQ_donnees_station_03174000_005.html",
                                          package = "aspeCQFD"))
 ```

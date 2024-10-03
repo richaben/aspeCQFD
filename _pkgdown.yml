@@ -1,6 +1,3 @@
 url: https://richaben.github.io/aspeCQFD/
 template:
   bootstrap: 5
-resource_files:
-  - inst/doc/fiche_CQ_donnees_station_03174000_005.html
-
