@@ -148,6 +148,9 @@ generate_fiche_cq_station(stations = c("03231000_013"#,
 ```
 
 ```{r, echo=FALSE, eval=T}
-htmltools::tags$iframe(title = "My embedded document", src = "./inst/exemples/fiche_CQ_donnees_station_03231000_013.html")
+htmltools::tags$iframe(title = "My embedded document", 
+                       height=800, width=800,
+                       src = system.file("inst", "exemples/fiche_CQ_donnees_station_03231000_013.html",
+                                         package = "aspeCQFD"))
 ```
 
