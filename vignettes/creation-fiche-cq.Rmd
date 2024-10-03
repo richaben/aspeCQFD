@@ -1,6 +1,8 @@
 ---
 title: "Comment créer une fiche CQ pour une station ?"
 output: rmarkdown::html_vignette
+resource_files:
+  - inst/exemples/fiche_CQ_donnees_station_03174000_005.html
 vignette: >
   %\VignetteIndexEntry{creation-fiche-cq}
   %\VignetteEngine{knitr::rmarkdown}
