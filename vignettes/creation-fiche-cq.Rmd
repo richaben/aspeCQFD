@@ -134,23 +134,26 @@ Cette fonction prend en entrée les arguments suivants :
   - `interactive` : un argument booléen (`FALSE` ou `TRUE`) pour définir si les graphiques dans les fiches produites seront sous format interactif ou non (ex. pour faciliter la lecture et l'inspection).
 
 
+> Exemple pour deux stations sur la période 2007 à 2022 :
+
 ```{r}
-generate_fiche_cq_station(stations = c("03231000_013"#, 
-                                       #"03174000_005", 
-                                       ),
+generate_fiche_cq_station(stations = c("03231000_013", 
+                                       "03174000_005"),
                           dossier_sortie = "D:/fiches_CQ/",
                           df_data = data_fichesCQ,
                           auteur = "Jean Dupont",
                           annee_debut = 2007,
                           annee_fin = 2022,
                           interactive = T)
-
 ```
 
+#### Exemple sur une station
+
 ```{r, echo=FALSE, eval=T}
-htmltools::tags$iframe(title = "My embedded document", 
-                       height=800, width=800,
-                       src = system.file("inst", "exemples/fiche_CQ_donnees_station_03231000_013.html",
+htmltools::tags$iframe(title = "Exemple fiche", 
+                       height = 600, 
+                       width = 800,
+                       src = system.file("exemples", "fiche_CQ_donnees_station_03231000_013.html",
                                          package = "aspeCQFD"))
 ```
 
