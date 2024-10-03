@@ -1,5 +1,5 @@
 ---
-title: "Créer une fiche CQ pour une station"
+title: "Créer des fiches CQ pour des stations"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{creation-fiche-cq}
@@ -22,6 +22,7 @@ knitr::opts_chunk$set(
 pak::pak(c("pascalirz/aspe",
            "richaben/aspeCQFD"))
 
+# chargement des packages
 library(aspe) 
 library(aspeCQFD)
 ```
@@ -31,9 +32,9 @@ library(aspeCQFD)
 
 ### 1) Disposer des données ASPE (et les charger)
 
-Une copie de la base de données ASPE sous format `Rdata` est nécessaire, devant comprendre l'ensemble des tables et mesures individuelles. Ces fichiers `Rdata` sont à créer avec les fonctions dédiées du package `aspe` ([cf. https://github.com/PascalIrz/aspe](https://github.com/PascalIrz/aspe)).
+Une copie de la base de données ASPE sous format `Rdata` est nécessaire, devant comprendre l'ensemble des tables et mesures individuelles. Ces fichiers `Rdata` sont à créer avec les fonctions dédiées du package `aspe` (cf. [https://github.com/PascalIrz/aspe](https://github.com/PascalIrz/aspe)).
 
-Par exemple (⚠ **chemin vers les données ASPE à adapter selon votre arborescence**):
+Par exemple (⚠ *chemin vers les données ASPE à adapter selon votre arborescence*):
 
 ```{r}
 aspe_tables <-
@@ -50,7 +51,7 @@ rm(aspe_tables, aspe_mei)
 
 ### 2) Constituer les tableaux nécessaires aux fiches
 
-La mise en forme de plusieurs tables de données est nécessaire pour la création des fiches CQ stations (contenant les éléments utilisés pour les fiches). Ces tables peuvent être créées de façon individuelle (cf. plus bas) ; mais une fonction du package {aspeCQFD} permet de créer en une fois l'ensemble des tables nécessaires.
+La mise en forme de plusieurs tables de données est nécessaire pour la création des fiches CQ stations (contenant les éléments utilisés pour les fiches). Ces tables peuvent être créées de façon individuelle (cf. ci-dessous) ; mais une fonction du package {aspeCQFD} permet de créer en une fois l'ensemble des tables nécessaires.
 
 ```{r}
 data_fichesCQ <-
@@ -66,7 +67,7 @@ La liste des tables individuelles est la suivante :
 1. table avec les données des paramètres environnementaux pour calculs de l'ipr ;
 1. table avec les données sur les probabilités des espèces issues des notes ipr.
 
-Si l'on souhaite créer les tables individuellement, voici comment procéder :
+Si l'on souhaite créer les tables individuellement, voici comment procéder à partir des fonctions du packages :
 
 ```{r}
 ### 1/ table de base
@@ -119,9 +120,9 @@ aspe_table_proba_esp_ipr <-
 
 ## Fonction pour créer une fiche CQ sur une station
 
-La génération des fiches CQ à la station utilise le `code Sandre` suivi du code du `point de prélèvement` poisson associé. Par exemple, si l'on prend l'exemple de la station [*DIVES A SAINT-SANSON 1*](https://www.sandre.eaufrance.fr/geo/StationMesureEauxSurface/03231000), son `code Sandre` est **`03231000`** et le `point de prélèvement` poisson associé est **`013`**.
+La génération des fiches CQ à la station utilise le `code Sandre` suivi du code du `point de prélèvement` poisson associé. Par exemple, si l'on prend l'exemple de la station [*DIVES A SAINT-SANSON 1*](https://www.sandre.eaufrance.fr/geo/StationMesureEauxSurface/03231000), son `code Sandre` est `03231000` et le `point de prélèvement` poisson associé est `013`.
 
-La fonction `generate_fiche_cq_station` permet de générer une ou plusieurs fiches CQ de station(s). Elle a été pensé pour pouvoir sélectionner une période de temps voulue pour inspecter les données bancarisées sur la station (→ dans le but de la mise en qualité des données !)
+La fonction `generate_fiche_cq_station()` permet de générer une ou plusieurs fiches CQ de station(s). Elle permet notamment de sélectionner une période de dates voulues pour inspecter les données bancarisées sur la station (→ *dans le but de la mise en qualité des données* !)
 
 Cette fonction prend en entrée les arguments suivants :
 
@@ -134,7 +135,7 @@ Cette fonction prend en entrée les arguments suivants :
   - `interactive` : un argument booléen (`FALSE` ou `TRUE`) pour définir si les graphiques dans les fiches produites seront sous format interactif ou non (ex. pour faciliter la lecture et l'inspection).
 
 
-> Pour générer deux fiches sur deux stations sur la période 2007 à 2022 :
+> *Exemple: pour générer deux fiches sur deux stations sur la période 2007 à 2022* :
 
 ```{r}
 generate_fiche_cq_station(stations = c("03231000_013", 
@@ -146,6 +147,3 @@ generate_fiche_cq_station(stations = c("03231000_013",
                           annee_fin = 2022,
                           interactive = T)
 ```
-
-
-<iframe src="docs/figures/fiche_CQ_donnees_station_03174000_005.html" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen="" allow="autoplay" data-external="1"></iframe>
