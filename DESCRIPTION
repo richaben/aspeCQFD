@@ -33,5 +33,6 @@ Imports:
 Remotes: 
   PascalIrz/aspe
 Suggests: 
+    htmltools,
     knitr
 VignetteBuilder: knitr
