@@ -1,47 +1,31 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# aspeCQFD - aspe Contrôle Qualité Fiches Données
-
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/richaben/aspeCQFD/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/richaben/aspeCQFD/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of aspeCQFD is to …
+# aspeCQFD - aspe <ins>C</ins>ontrôle <ins>Q</ins>ualité <ins>F</ins>iches <ins>D</ins>onnées
 
-## Installation
+L’objectif du package {aspeCQFD} est de pouvoir créer des fiches de
+synthèse sur les informations bancarisées dans la base ASPE afin de
+pouvoir aider aux contrôles et validations.
 
-You can install the development version of aspeCQFD from
-[GitHub](https://github.com/) with:
+Les fiches CQ générées contiennent un certain n
+
+## Installation 💻
+
+La version en développement du package {aspeCQFD} est disponbile sur
+[GitHub](https://github.com/) avec la commande suivante :
 
 ``` r
 # install.packages("pak")
 pak::pak("richaben/aspeCQFD")
 ```
 
-## Example
+## Documentation 📚
 
-This is a basic example which shows you how to solve a common problem:
+Une vignette de documentation :
 
-``` r
-library(aspeCQFD)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+- [Créer des fiches CQ pour des
+  stations](https://richaben.github.io/aspeCQFD/articles/creation-fiche-cq.html)
