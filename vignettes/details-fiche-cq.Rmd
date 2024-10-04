@@ -1,0 +1,100 @@
+---
+title: "Détails de la fiche CQ"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Détails de la fiche CQ}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE
+)
+
+library(ggplot2)
+library(ggiraph)
+
+load(here::here("data/plots_example.Rdata"))
+```
+
+### Les principaux graphiques retrouvés dans la fiche CQ
+
+> ⚠ **Informations** :<br>
+> 
+> Exemple pour quelques graphiques pour une station. Ici, les graphiques sont interactifs.
+>
+
+#### Jours de pêche
+
+```{r}
+plot_jour_peche 
+```
+
+#### Objectifs et protocole de pêche
+
+```{r, fig.width=10, fig.height=4}
+plot_obj1
+```
+
+
+```{r, fig.width=10, fig.height=6}
+plot_obj2
+```
+
+#### Mise en oeuvre de la pêche // Description
+
+```{r, fig.width=10, fig.height=6}
+plot_meo1
+```
+
+#### Mise en oeuvre de la pêche // Environnement
+
+```{r, fig.width=10, fig.height=10}
+plot_meo2
+```
+
+#### Données environnement - Faciès
+
+```{r, out.width="100%"}
+plot_facies
+```
+
+#### Données environnement - Habitats
+
+```{r, fig.width=10, fig.height=8.5}
+plot_habitat
+```
+
+#### Données piscicoles - Peuplement
+
+```{r, fig.height=6.5, fig.width=10}
+plot_peuplement
+```
+
+#### Données piscicoles - IPR
+
+```{r, fig.height=6.5, fig.width=10}
+plot_ipr
+```
+
+#### Données piscicoles - IPR métriques
+
+```{r, fig.height=6.5, fig.width=10}
+plot_ipr_metrique
+```
+
+#### Données piscicoles - IPR proba espèces
+
+```{r, fig.height=6.5, fig.width=10}
+plot_ipr_proba_esp
+```
+
+#### Données piscicoles - IPR paramètres environnement
+
+```{r, fig.height=6.5, fig.width=10}
+plot_ipr_param_env
+```
