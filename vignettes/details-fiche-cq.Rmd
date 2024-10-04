@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 library(ggplot2)
 library(ggiraph)
 
-load(here::here("data/plots_example.Rdata"))
+load(here::here("inst/exdata/plots_example.Rdata"))
 ```
 
 ### Les principaux graphiques retrouvés dans la fiche CQ
