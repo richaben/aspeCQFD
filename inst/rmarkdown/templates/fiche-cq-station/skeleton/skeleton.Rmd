@@ -4,7 +4,7 @@ author: "`r params$auteur`"
 subtitle: "`r unique(aspe_table_fiches[aspe_table_fiches$code_sta_pp %in% params$code_station,]$sta_libelle_sandre)`"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output: 
-  html_document :
+  html_document:
     highlight: pygments #default, tango, pygments, kate, monochrome, espresso, zenburn, haddock, and textmate 
     theme: default #“default”, “cerulean”, “journal”, “flatly”, “readable”, “spacelab”, “united”, “cosmo”, “lumen”, “paper”, “sandstone”, “simplex”, “yeti”
     toc: false
@@ -32,11 +32,11 @@ htmltools::img(src = knitr::image_uri('logo_OFB_v2.png'),
 ```
 
 
-> ⚠ **Important / Préambule** :<br><br>
+> ⚠ **Préambule** :<br>
 > 
-> Les données couvrent la période de **`r params$annee_debut` à `r params$annee_fin`** (paramètres de filtres pour la génération de cette fiche). <br>
-> Les graphiques présentés ci-dessous ont pour vocation principale à la mise en qualité des données (et pas vraiment à l'analyse des variations sur les variables bancarisées). Les graphiques, confrontés entre eux, permettent de détecter d'éventuelles erreurs ou problèmes de cohérence dans les données. <br> 
-> Si l'option a été activée au moment de sa création, les graphiques sont interactifs, càd. des informations sont affichées au survol de la souris. <br>
+> 1. Les données couvrent la **période de `r params$annee_debut` à `r params$annee_fin`** (*paramètres de filtres pour la génération de cette fiche*). <br>
+> 2. L'ensemble des graphiques ci-dessous ont pour **objectif principal d'aider à la mise en qualité des données** (*et pas vraiment à étudier les variations sur les variables bancarisées*). Avec une inspection visuelle, ils permettent de mettre en évidence d'éventuelles erreurs ou problèmes de cohérence dans les données présentes en base. <br> 
+> 3. Si l'option a été activée au moment de la création de la fiche, les **graphiques sont interactifs**, c.à.d. que des informations peuvent être affichées au survol avec la souris. <br>
 >
 
 ## Résumé des opérations
@@ -97,6 +97,8 @@ ope_list %>%
 
 ### Jours de pêche sur la station
 
+Ce graphique replace les opérations de pêche réalisées sur la période (entre l'année `r params$annee_debut` et l'année `r params$annee_fin`, paramètres de filtres), en fonction du numéro de jour de l'année. Il permet de visualiser rapidement si les opérations de pêche ont été réalisées à des périodes différentes ou relativement équivalentes.
+
 ```{r, fig.width=8, fig.height=4}
 if(params$interactive == TRUE){
   ope_list %>% 
@@ -110,6 +112,8 @@ if(params$interactive == TRUE){
 
 ## Objectifs et protocole de pêche
 
+Le graphique ci-dessous replace les opérations de pêche réalisées sur la station, en fonction du réseau (objectif) et du protocole. Il permet de visualiser si des opérations ont été saisies sous des objectifs différents et/ou avec des protocoles différents.
+
 ```{r, fig.width=10, fig.height=4}
 if(params$interactive == TRUE){
   df_station %>% 
@@ -120,6 +124,8 @@ if(params$interactive == TRUE){
     plot_objectif_reseau()
 }
 ```
+
+Le graphique ci-dessous présentent les informations contextuelles saisies par opérations de pêche réalisées. Les croix rouges (❌) indiquent les valeurs manquantes pour les variables contextuelles. La valeur de la variable est indiquée directement sur le graphique.
 
 ```{r, fig.width=10, fig.height=6}
 if(params$interactive == TRUE){
@@ -138,6 +144,8 @@ if(params$interactive == TRUE){
 ## Mise en oeuvre de la pêche
 ### Description pêche
 
+Ce graphique est composé de différents panels détaillant les protocoles, les modes de prospections et passages (nombre), ainsi que le nombre de points réalisés.
+
 ```{r, fig.width=10, fig.height=6}
 if(params$interactive == TRUE){
   df_station_ope_env %>% 
@@ -150,6 +158,8 @@ if(params$interactive == TRUE){
 ```
 
 ### Descriptions pêche et environnement
+
+Ce graphique détaille les informations relatives à la description des opérations de pêche et de l'environnement. Les croix rouges (❌) indiquent si les valeurs ne sont pas renseignées en base.
 
 ```{r, fig.width=10, fig.height=10}
 if(params$interactive == TRUE){
@@ -166,6 +176,8 @@ if(params$interactive == TRUE){
 ## Données environnementales
 ### faciès
 
+Ce graphique détaille les informations relatives aux données environnementales sur les faciès. Les croix (❌) indiquent si les valeurs ne sont pas renseignées en base.
+
 ```{r, fig.width=10, fig.height=9}
 if(params$interactive == TRUE){
   df_station_ope_env %>% 
@@ -178,6 +190,8 @@ if(params$interactive == TRUE){
 ```
 
 ### habitat
+
+Ce graphique détaille les informations relatives aux données environnementales les habitats. Les croix rouges (❌) indiquent si les valeurs ne sont pas renseignées en base.
 
 ```{r, fig.width=10, fig.height=8.5}
 if(params$interactive == TRUE){
@@ -194,6 +208,8 @@ if(params$interactive == TRUE){
 ## Saisies piscicoles
 ### Le cortège d'espèces
 
+Le nombre d'individus par taxons et par passage en fonction des opérations de pêche réalisées sur la station sont présentés sur le graphique ci-dessous. Les codes taxons espèces "3 lettres" sont utilisés.
+
 ```{r, fig.height=6.5, fig.width=10}
 if(params$interactive == TRUE){
   df_station_peuplement %>%
@@ -206,6 +222,9 @@ if(params$interactive == TRUE){
 ```
 
 ### L'indice poisson rivière (IPR)
+
+Le graphique composé ci-dessous présente sur le panel du haut la présence (ou non) de notes IPR sur les opérations réalisées, et sur le panel du bas, l'évolution des notes IPR en fonction des années (dates des opérations de pêche). Les croix rouges (❌) indiquent si les valeurs ne sont pas renseignées en base.
+
 
 ```{r, fig.width=10, fig.height=6.5}
 if(params$interactive == TRUE){
@@ -220,6 +239,7 @@ if(params$interactive == TRUE){
 }
 ```
 
+Le graphique ci-dessous présente le détail des 7 métriques constitutives des notes IPR calculées (valeurs observées vs. valeurs théoriques) en fonction des années (dates des opérations de pêche).
 
 ```{r, fig.width=10, fig.height=6.5}
 if(params$interactive == TRUE){
@@ -232,6 +252,7 @@ if(params$interactive == TRUE){
 }
 ```
 
+Ce graphique présente le détail des taxons rentrant dans les calculs des notes IPR pour chaque opération de pêche. La présence/absence des taxons (*symboles*), ainsi que la probabilité associée (*%*) et le nombre d'espèces (*taille du point proportionnel*) sont présentés. Les probabilités égales à 0% ne sont pas représentées.
 
 ```{r, fig.width=9.5, fig.height=6.5}
 if(params$interactive == TRUE){
@@ -244,13 +265,9 @@ if(params$interactive == TRUE){
 }
 ```
 
+Sur le graphique ci-dessous sont présentés les paramètres environnementaux utilisés dans le calcul des notes IPR. Les croix rouges (❌) indiquent si les valeurs ne sont pas renseignées en base. Le panel du dessous présente leurs évolutions en fonction des années (dates des opérations de pêche).
 
 ```{r, fig.width=10, fig.height=6.5}
-# ```{r, fig.width=10, fig.height=7.5}
-# df_station_param_ipr %>%
-#    plot_ipr_param_station()
-# ```
-
 if(params$interactive == TRUE){
   df_station_param_ipr %>%
     plot_ipr_param_station() %>% 
@@ -263,6 +280,8 @@ if(params$interactive == TRUE){
 ```
 
 ### Commentaires éventuels
+
+Ci-dessous, sont listés les commentaires associés aux opérations de pêche pouvant, par exemple, inclure des informations sur les mortalités de taxons ou les nouvelles notes IPR après recalculs (LPX en LPP). 
 
 ```{r}
 ope_list %>% 
