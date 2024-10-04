@@ -3,7 +3,8 @@ pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   creation-fiche-cq: creation-fiche-cq.html
-last_built: 2024-10-04T10:37Z
+  details-fiche-cq: details-fiche-cq.html
+last_built: 2024-10-04T11:28Z
 urls:
   reference: https://richaben.github.io/aspeCQFD/reference
   article: https://richaben.github.io/aspeCQFD/articles
