@@ -120,14 +120,15 @@ aspe_table_proba_esp_ipr <-
 
 ## Fonction pour créer une fiche CQ sur une station
 
-La génération des fiches CQ à la station utilise le `code Sandre` suivi du code du `point de prélèvement` poisson associé. Par exemple, si l'on prend l'exemple de la station [*DIVES A SAINT-SANSON 1*](https://www.sandre.eaufrance.fr/geo/StationMesureEauxSurface/03231000), son `code Sandre` est `03231000` et le `point de prélèvement` poisson associé est `013`.
+La génération des fiches CQ à la station utilise le "code Sandre" suivi du code du `point de prélèvement` poisson associé. 
+Par exemple, si l'on prend l'exemple de la station [*DIVES A SAINT-SANSON 1*](https://www.sandre.eaufrance.fr/geo/StationMesureEauxSurface/03231000), son "code Sandre" est `03231000` et le "point de prélèvement" poisson associé est `013`.
 
 La fonction `generate_fiche_cq_station()` permet de générer une ou plusieurs fiches CQ de station(s). Elle permet notamment de sélectionner une période de dates voulues pour inspecter les données bancarisées sur la station (→ *dans le but de la mise en qualité des données* !)
 
 Cette fonction prend en entrée les arguments suivants :
 
   - `stations` : le code Sandre et point de prélèvement de la station (ex. `03231000_013`). Cet argument peut contenir plusieurs stations, combinées dans un vecteur (ex. `c("03231000_013", "03174000_005")` pour 2 stations); 
-  - `dossier_sortie` : le dossier de sortie à spécifier où seront enregistrées les fiches créées ;
+  - `dossier_sortie` : le dossier de sortie sur l'ordinateur à spécifier où seront enregistrées les fiches créées ;
   - `df_data` : un objet contenant les données nécessaires à la création des fiches, créé précédemment avec la fonction `mef_creer_ttes_tables_fichesCQ()` (cf. ci-dessus) ;
   - `auteur` : le nom de l'auteur (ou de la DR) à l'origine de la fiche ;
   - `annee_debut` : l'année de début des données à prendre en compte ;
@@ -135,7 +136,7 @@ Cette fonction prend en entrée les arguments suivants :
   - `interactive` : un argument booléen (`FALSE` ou `TRUE`) pour définir si les graphiques dans les fiches produites seront sous format interactif ou non (ex. pour faciliter la lecture et l'inspection).
 
 
-> *Exemple: pour générer deux fiches sur deux stations sur la période 2007 à 2022* :
+> *Exemple: pour générer deux fiches sur deux stations sur la période 2014 à 2022* :
 
 ```{r}
 generate_fiche_cq_station(stations = c("03231000_013", 
