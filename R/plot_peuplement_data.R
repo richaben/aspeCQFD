@@ -44,18 +44,36 @@ plot_peuplement_data <- function(df){
     dplyr::distinct() %>% 
     dplyr::summarise(lop_effectif = sum(lop_effectif))
   
-  col_scale_peuplement <- 
-    setNames(RColorBrewer::brewer.pal(n = length(df$tpe_libelle %>% unique()),
-                                      'Set2'), 
-             df$tpe_libelle %>% 
+  
+  if(length(df$tpe_libelle %>% unique()) == 1){
+    col_scale_peuplement <- setNames(c("#66c2a5"),
+                                     df$tpe_libelle %>% 
+                                     unique() %>% 
+                                     sort())
+  } else if(
+    length(df$tpe_libelle %>% unique()) == 2
+  ) {
+    col_scale_peuplement <- setNames(c("#66c2a5", "#fc8d62"), 
+                                     df$tpe_libelle %>% 
+                                       unique() %>% 
+                                       sort())
+  } else {
+    
+    col_scale_peuplement <- 
+      setNames(RColorBrewer::brewer.pal(n = length(df$tpe_libelle %>% unique()),
+                                        'Set2'), 
+               df$tpe_libelle %>% 
                unique() %>% 
                sort())
+  }
+  
     
     df %>% 
     {ggplot2::ggplot(.,  aes(x = ope_date, 
                              y = lop_effectif, 
                              #color= forcats::fct_rev(tpe_libelle),
-                             fill= forcats::fct_rev(tpe_libelle))) +
+                             fill= forcats::fct_rev(tpe_libelle),
+                             group = forcats::fct_rev(tpe_libelle))) +
         ggiraph::geom_bar_interactive(stat="identity", 
                           col = 'black', 
                           linewidth = 0.1, 

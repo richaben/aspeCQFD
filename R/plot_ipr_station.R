@@ -79,7 +79,8 @@ plot_ipr_station <- function(df,
                                         fill="grey70",
                                         aes(x=ope_date,y=ipr,
                                         tooltip = paste0("ope_id: ", ope_id,"<br>",
-                                                         "ope_date: ", ope_date),
+                                                         "ope_date: ", ope_date, "<br>",
+                                                         "note_ipr: ", ipr),
                                         data_id = ope_id)) +
         ggplot2::ylab(NULL) +
         ggplot2::xlab(NULL) +

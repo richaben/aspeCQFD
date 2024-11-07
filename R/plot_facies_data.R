@@ -157,6 +157,7 @@ plot_facies_data <- function(df){
                             y = fac_importance_relative, 
                             fill = fac_tyf_id) ) +
         ggiraph::geom_bar_interactive(
+          width = 90,
           stat="identity", 
           col='black', 
           linewidth = 0.2, 
