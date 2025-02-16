@@ -1,4 +1,7 @@
 url: https://richaben.github.io/aspeCQFD/
 template:
   bootstrap: 5
-
+  includes:
+    after_body: >
+      <script data-goatcounter="https://richaben.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
