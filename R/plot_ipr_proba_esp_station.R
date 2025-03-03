@@ -40,6 +40,9 @@ plot_ipr_proba_esp_station <- function(df){
                   text = dplyr::if_else(text == '0%', NA, text),
                   pch_size = (log1p(ppi_param_effectif) / log1p(max(ppi_param_effectif))) + 3)
   
+  pal_presence <- 
+    setNames(c("#009392FF", "#CF597EFF"), c("Pr\u00e9sence", "Absence"))
+  
   ggplot2::ggplot(data = df,
                   aes(y = esp_code_alternatif,
                       x = ope_date)) +
@@ -66,7 +69,7 @@ plot_ipr_proba_esp_station <- function(df){
                   caption = "Les valeurs \u00e0 0% ne sont pas affich\u00e9es",
                   fill = NULL) +
     ggplot2::scale_shape_manual(values = c(21, 22), guide = 'none') +
-    ggplot2::scale_fill_manual(values = unique(df$couleur), guide="none") +
+    ggplot2::scale_fill_manual(values = pal_presence, guide="none") +
     ggplot2::theme_bw() +
     ggplot2::theme(
       axis.text.y = ggplot2::element_text(face = 'bold', size = 10),
