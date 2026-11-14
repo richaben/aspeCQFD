@@ -1,4 +1,4 @@
-## aspeCQFD - aspe *C*ontrôle *Q*ualité *F*iches *D*onnées [![aspeCQFD website](reference/figures/logo.png)](https://richaben.github.io/aspeCQFD/)
+# aspeCQFD - aspe *C*ontrôle *Q*ualité *F*iches *D*onnées
 
 L’objectif du package {aspeCQFD} est de pouvoir créer des fiches de
 synthèse sur les informations bancarisées dans la base ASPE afin de
