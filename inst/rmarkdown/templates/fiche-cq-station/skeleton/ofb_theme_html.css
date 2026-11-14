@@ -1,95 +1,303 @@
-/*
+/* =====================================================================
+   OFB — refonte du theme - novembre 2026
+   ===================================================================== */
 
-h1.title {
-  color: white;
-  background-image: url("XXX.jpg");
-  padding-top: 150px;
-  padding-right: 50px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-origin: border-box;
-  height: 250px;
-}
-*/
+/* ---------------------------------------------------------------------
+   1. Variables
+   --------------------------------------------------------------------- */
+:root {
+  --ofb-blue:        #0A285E;  /* titres, filets forts            */
+  --ofb-blue-light:  #4575B4;  /* h3, numéros                     */
+  --ofb-navy:        #003678;  /* liens (bleu du logo)            */
+  --ofb-green:       #0E823A;
+  --ofb-green-dark:  #0B6B30;  /* code inline                     */
+  --ofb-green-surf:  #EAF4EC;
+  --ofb-orange:      #EFB036;  /* décoratif uniquement (bordures) */
+  --ofb-orange-surf: #FDF6E6;
 
-/*div.main-container {
-  max-width: 85% !important;
-  margin: auto;
-}*/
-
-
-h1:before,h1:after {
-    content:'';
-    display: inline-block;
-    position:absolute;
-    top: 0;
-    right: -20px;
-    width: 20px;
-    height: 100%;
-    background:inherit;
-    background-position:100% 100%;
-}
-h1:before {
-    left:-20px;
-    background-position: 0 100%;
+  --ofb-text:        #1E2A3B;
+  --ofb-muted:       #4A5568;
+  --ofb-surface:     #F2F5F9;
+  --ofb-surface-2:   #F8FAFC;
+  --ofb-border:      #DCE3EC;
 }
 
-
-#TOC {
-  position: fixed;
-  left: 70px;
-  width: 30%;
-  max-height: 60%;
-  overflow:auto;
-  font-size: 14px;
-}
-*/
-
-
+/* ---------------------------------------------------------------------
+   2. Base
+   --------------------------------------------------------------------- */
 body {
+  color: var(--ofb-text);
   font-size: 15px;
-  color: #606c71; 
+  line-height: 1.6;
+  background: #fff;
 }
 
+/* Colonne plus large que le défaut (940px) : les graphiques font 10 in */
+.main-container {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 24px 48px;
+}
 
+p { margin: 0 0 1em; }
+strong { color: var(--ofb-blue); }
 
+a, a:visited { color: var(--ofb-navy); text-decoration: underline; text-underline-offset: .2em; }
+a:hover, a:focus { color: var(--ofb-blue-light); }
+
+/* ---------------------------------------------------------------------
+   3. En-tête : titre, sous-titre, auteur, date
+   --------------------------------------------------------------------- */
+#header {
+  margin: 24px 0 32px;
+  padding: 22px 240px 18px 26px;   /* 240px à droite : place du logo */
+  min-height: 130px;
+  /* Logo affiché en fond de l'en-tête : il reste toujours DANS le cadre.
+     Le fichier logo_OFB_v2.png doit être dans le même dossier que ce CSS ;
+     rmarkdown l'intègre automatiquement au HTML (self_contained). */
+  background: #fff url("logo_OFB_v2.png") no-repeat right 24px center;
+  background-size: 190px auto;
+  border: 1px solid var(--ofb-border);
+  border-top: 6px solid var(--ofb-blue);
+}
+
+#header h1.title {
+  color: var(--ofb-blue);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 6px;
+}
+
+#header h3.subtitle {
+  color: var(--ofb-blue-light);
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 0 14px;
+}
+
+#header h4.author,
+#header h4.date {
+  display: inline-block;
+  margin: 0 18px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ofb-muted);
+}
+
+#header h4.author::before { content: "Auteur · "; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 11px; }
+#header h4.date::before   { content: "Édition · "; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 11px; }
+
+/* Masque l'ancien logo inséré par chunk R (s'il est encore présent),
+   pour éviter un doublon avec le logo de l'en-tête 
+.main-container img[alt="logo"],
+.main-container img.logo-ofb { display: none !important; } */
+
+/* ---------------------------------------------------------------------
+   4. Titres
+   --------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 { color: var(--ofb-blue); font-weight: 700; line-height: 1.3; }
+
+/* Pas de soulignement sur les ancres de titres */
+h1 a, h2 a, h3 a, h4 a { text-decoration: none; color: inherit; }
+
+/* h2 : grande partie */
+h2 {
+  font-size: 22px;
+  margin: 44px 0 16px;
+  padding: 8px 14px;
+  background: var(--ofb-surface);
+  border-left: 5px solid var(--ofb-blue);
+}
+
+/* h3 : sous-partie */
+h3 {
+  font-size: 18px;
+  color: var(--ofb-blue-light);
+  margin: 30px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ofb-border);
+}
+h3::first-letter { text-transform: uppercase; }
+
+h4 { font-size: 15px; color: var(--ofb-text); margin: 22px 0 8px; }
+
+/* Numéros (si number_sections: true) */
+.header-section-number { color: var(--ofb-blue-light); margin-right: .45em; }
+h2 .header-section-number {
+  display: inline-block;
+  min-width: 1.8em;
+  padding: 0 .4em;
+  background: var(--ofb-blue);
+  color: #fff;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------------
+   5. Encadré « Préambule » (blockquote)
+   --------------------------------------------------------------------- */
 blockquote {
-  background: #f9f9f9;
-  border-left: 8px solid #ccc;
-  margin: 1.5em 10px;
-  padding: 0.5em 25px;
+  margin: 0 0 28px;
+  padding: 16px 22px 6px;
+  background: var(--ofb-orange-surf);
+  border-left: 5px solid var(--ofb-orange);
   font-size: 14px;
   line-height: 1.6;
+  color: var(--ofb-text);
 }
 
-blockquote:before {
-  color: #ccc;
-  margin-right: 0.5em;
-  vertical-align: -0.4em;
+blockquote p,
+blockquote ol,
+blockquote ul { margin-bottom: 10px; }
+
+blockquote ol, blockquote ul { padding-left: 22px; }
+blockquote li + li { margin-top: 6px; }
+blockquote em { color: var(--ofb-muted); }
+
+/* ---------------------------------------------------------------------
+   6. Tableaux kable
+   --------------------------------------------------------------------- */
+.main-container table {
+  display: block;                  /* défilement horizontal si trop large */
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 12px auto 28px;          /* centré dans la colonne */
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  border-collapse: collapse;
+  border-top: 2px solid var(--ofb-blue);
+  border-bottom: 2px solid var(--ofb-blue);
 }
 
-blockquote p {
-  display: inline;
+.main-container table > thead > tr > th,
+.main-container table tr.header th {
+  background: var(--ofb-surface);
+  color: var(--ofb-blue);
+  font-weight: 700;
+  white-space: nowrap;
+  vertical-align: bottom;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--ofb-blue);
 }
 
-
-h1 {
-  color: #0A285E; /*#0A285E */
-  
+.main-container table > tbody > tr > td {
+  padding: 6px 12px;
+  border-top: 0;
+  border-bottom: 1px solid var(--ofb-border);
+  vertical-align: top;
 }
 
-h2,h3 { /* Header 2 */
-  color: #4575b4 ; /*#3EB3B3*/
+.main-container table > tbody > tr:nth-child(even) > td,
+.main-container table tr.even td { background: var(--ofb-surface-2); }
+
+.main-container table > tbody > tr:hover > td { background: #E8EEF7; }
+
+.main-container table caption {
+  caption-side: top;
+  color: var(--ofb-muted);
+  font-weight: 700;
+  text-align: left;
+  padding: 0 0 6px;
 }
-  
 
+/* ---------------------------------------------------------------------
+   7. Graphiques (ggplot statiques et ggiraph)
+   --------------------------------------------------------------------- */
+/* Graphiques statiques : pleine largeur de la colonne, sans cadre */
+.main-container img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;                    /* conserve les proportions */
+  margin: 8px 0 32px;
+  border: 0;
+  padding: 0;
+}
 
-/* inline code color */
-code {
-  color: #0E823A;
-  
-  font-weight: 600;
-  background: #C4DB9B;
+/* Graphiques ggiraph (et autres htmlwidgets) : s'adaptent à la largeur */
+.main-container .girafe,
+.main-container .html-widget {
+  width: 100% !important;          /* écrase la largeur fixe écrite en ligne */
+  max-width: 100%;
+  margin: 8px 0 32px;
+  border: 0;
+  padding: 0;
+}
+
+.main-container .girafe {
+  height: auto !important;
+}
+
+.main-container .girafe svg {
+  width: 100% !important;
+  height: auto !important;
+}
+
+p.caption, .figure .caption {
+  color: var(--ofb-muted);
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+/* ---------------------------------------------------------------------
+   8. Code block
+   --------------------------------------------------------------------- */
+p code, li code, td code {
+  color: var(--ofb-green-dark);
+  background: var(--ofb-green-surf);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 88%;
+}
+
+pre {
+  background: var(--ofb-surface-2);
+  border: 1px solid var(--ofb-border);
+  border-left: 4px solid var(--ofb-blue);
+  border-radius: 0;
+  font-size: 13px;
+}
+
+/* ---------------------------------------------------------------------
+   9. Table des matières flottante (si toc: true + toc_float: true)
+   --------------------------------------------------------------------- */
+.tocify { border: 0; border-left: 1px solid var(--ofb-border); border-radius: 0; font-size: 13px; }
+.tocify .list-group-item { border: 0; color: var(--ofb-muted); background: transparent; padding: 5px 12px; }
+.tocify .list-group-item:hover { color: var(--ofb-navy); background: var(--ofb-surface); }
+.tocify .list-group-item.active,
+.tocify .list-group-item.active:hover,
+.tocify .list-group-item.active:focus {
+  color: var(--ofb-blue);
+  background: var(--ofb-surface);
+  font-weight: 700;
+  box-shadow: inset 3px 0 0 var(--ofb-blue);
+}
+
+/* ---------------------------------------------------------------------
+   10. Impression / PDF depuis le navigateur
+   --------------------------------------------------------------------- */
+@media print {
+  body { font-size: 10.5pt; }
+  .main-container { max-width: none; padding: 0; }
+  #header { border-color: #999; }
+  #TOC, .tocify { display: none !important; }
+  h2, h3 { break-after: avoid; page-break-after: avoid; }
+  table, img, .girafe, blockquote { break-inside: avoid; page-break-inside: avoid; }
+  .main-container table { display: table; width: 100%; overflow: visible; }
+  a { text-decoration: none; }
+}
+
+/* ---------------------------------------------------------------------
+   11. Petits écrans le logo au-dessus du titre
+   --------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  #header {
+    padding: 100px 16px 16px;
+    background-position: left 16px top 16px;
+    background-size: 140px auto;
+  }
+  #header h1.title { font-size: 21px; }
+  h2 { font-size: 19px; }
 }

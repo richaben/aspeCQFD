@@ -1,11 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/richaben/aspeCQFD/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/richaben/aspeCQFD/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-## aspeCQFD - aspe <ins>C</ins>ontrôle <ins>Q</ins>ualité <ins>F</ins>iches <ins>D</ins>onnées
+## aspeCQFD - aspe <ins>C</ins>ontrôle <ins>Q</ins>ualité <ins>F</ins>iches <ins>D</ins>onnées <a href="https://richaben.github.io/aspeCQFD/"><img src="man/figures/logo.png" align="right" height="128" alt="aspeCQFD website" /></a>
 
 L’objectif du package {aspeCQFD} est de pouvoir créer des fiches de
 synthèse sur les informations bancarisées dans la base ASPE afin de

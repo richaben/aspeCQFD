@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE)
 ```
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, eval=FALSE}
 htmltools::img(src = knitr::image_uri('logo_OFB_v2.png'),
                alt = 'logo',
                style = 'position:absolute; top:0; right:0; padding:10px; width:180px;')
