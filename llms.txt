@@ -1,0 +1,107 @@
+## aspeCQFD - aspe *C*ontrôle *Q*ualité *F*iches *D*onnées [![aspeCQFD website](reference/figures/logo.png)](https://richaben.github.io/aspeCQFD/)
+
+L’objectif du package {aspeCQFD} est de pouvoir créer des fiches de
+synthèse sur les informations bancarisées dans la base ASPE afin de
+pouvoir aider aux contrôles et validations.
+
+## Installation 💻
+
+La version en développement du package {aspeCQFD} est disponbile sur
+[GitHub](https://github.com/) avec la commande suivante :
+
+``` r
+
+# install.packages("pak")
+pak::pak("richaben/aspeCQFD")
+```
+
+## Documentation 📚
+
+Vignettes de documentation :
+
+- [Créer des fiches CQ pour des
+  stations](https://richaben.github.io/aspeCQFD/articles/creation-fiche-cq.html)
+- [Détails du contenu des fiches CQ
+  stations](https://richaben.github.io/aspeCQFD/articles/details-fiche-cq.html)
+
+# Package index
+
+## All functions
+
+- [`generate_fiche_cq_station()`](https://richaben.github.io/aspeCQFD/reference/generate_fiche_cq_station.md)
+  : Générer une fiche de Contrôle Qualité des données pour une station
+- [`get_liste_ope_station()`](https://richaben.github.io/aspeCQFD/reference/get_liste_ope_station.md)
+  : Obtenir la liste des opérations sur une station
+- [`get_liste_stations_dpt()`](https://richaben.github.io/aspeCQFD/reference/get_liste_stations_dpt.md)
+  : Obtenir la liste des stations pour un département
+- [`mef_ajouter_codes_sandre_pp()`](https://richaben.github.io/aspeCQFD/reference/mef_ajouter_codes_sandre_pp.md)
+  : Ajoute à un dataframe aspe les codes SANDRE et points de prélèvement
+- [`mef_ajouter_facies()`](https://richaben.github.io/aspeCQFD/reference/mef_ajouter_facies.md)
+  : Ajoute les données de facies à un dataframe
+- [`mef_ajouter_habitat()`](https://richaben.github.io/aspeCQFD/reference/mef_ajouter_habitat.md)
+  : Ajoute les données habitats à un dataframe avec les données aspe
+- [`mef_ajouter_infos_context()`](https://richaben.github.io/aspeCQFD/reference/mef_ajouter_infos_context.md)
+  : Ajoute les informations contextuelles pour les opérations issues de
+  ASPE
+- [`mef_creer_table_base_fiches()`](https://richaben.github.io/aspeCQFD/reference/mef_creer_table_base_fiches.md)
+  : Création d'un tableau de base avec les infos ASPE pour les fiches
+- [`mef_creer_table_fiches()`](https://richaben.github.io/aspeCQFD/reference/mef_creer_table_fiches.md)
+  : Création d'un tableau de données ASPE pour les fiches de pêche
+- [`mef_creer_table_ope_env()`](https://richaben.github.io/aspeCQFD/reference/mef_creer_table_ope_env.md)
+  : Création d'un tableau avec les données ASPE pour les paramètres de
+  pêche et env sur les opérations
+- [`mef_creer_table_peuplement()`](https://richaben.github.io/aspeCQFD/reference/mef_creer_table_peuplement.md)
+  : Créer un tableau peuplement à partir du dataframe pour les fiches
+  stations
+- [`mef_creer_ttes_tables_fichesCQ()`](https://richaben.github.io/aspeCQFD/reference/mef_creer_ttes_tables_fichesCQ.md)
+  : Fonction unique pour créer un ensemble de tables nécessaires à la
+  création des fiches CQ stations
+- [`mef_tab_proba_esp_ipr()`](https://richaben.github.io/aspeCQFD/reference/mef_tab_proba_esp_ipr.md)
+  : Créer un tableau avec les probas IPR pour les espèces dans les
+  stations
+- [`mef_tab_protocole_pts()`](https://richaben.github.io/aspeCQFD/reference/mef_tab_protocole_pts.md)
+  : Mise en forme d'un tableau protocole pêche points pour description
+  opération
+- [`plot_completude_valeur()`](https://richaben.github.io/aspeCQFD/reference/plot_completude_valeur.md)
+  : Plot le graphique de completude des valeurs pour une station et
+  liste de paramètres
+- [`plot_descript_peche_env()`](https://richaben.github.io/aspeCQFD/reference/plot_descript_peche_env.md)
+  : Plot descriptif des paramètres de pêche et environnementaux
+- [`plot_facies_data()`](https://richaben.github.io/aspeCQFD/reference/plot_facies_data.md)
+  : Plot du graphique des données faciès pour une station
+- [`plot_habitat_data()`](https://richaben.github.io/aspeCQFD/reference/plot_habitat_data.md)
+  : Plot du graphique des données habitat pour une station
+- [`plot_infos_context()`](https://richaben.github.io/aspeCQFD/reference/plot_infos_context.md)
+  : Plot les infos contextuelles des opérations pour une station
+- [`plot_ipr_metrique()`](https://richaben.github.io/aspeCQFD/reference/plot_ipr_metrique.md)
+  : Plot un graphique avec les métriques IPR théoriques et observés pour
+  une station
+- [`plot_ipr_param_station()`](https://richaben.github.io/aspeCQFD/reference/plot_ipr_param_station.md)
+  : Plot le graphique des paramètres IPR (présences et variations)
+- [`plot_ipr_proba_esp_station()`](https://richaben.github.io/aspeCQFD/reference/plot_ipr_proba_esp_station.md)
+  : Plot le graphique des probas des espèces issues du calcul de l'IPR
+- [`plot_ipr_station()`](https://richaben.github.io/aspeCQFD/reference/plot_ipr_station.md)
+  : Plot un graphique des notes IPR pour une station
+- [`plot_jour_peche()`](https://richaben.github.io/aspeCQFD/reference/plot_jour_peche.md)
+  : Plot jours de pêche pour une station ou plusieurs
+- [`plot_objectif_reseau()`](https://richaben.github.io/aspeCQFD/reference/plot_objectif_reseau.md)
+  : Plot objectifs réseaux pour une station
+- [`plot_peuplement_data()`](https://richaben.github.io/aspeCQFD/reference/plot_peuplement_data.md)
+  : Plot du graphique du peuplement par espèce et par année pour une
+  station
+- [`plot_proto_prospec_passage()`](https://richaben.github.io/aspeCQFD/reference/plot_proto_prospec_passage.md)
+  : Plot le graphique Protocole(s) + Passage(s) + Point(s) pour une
+  station
+- [`select_infos_context()`](https://richaben.github.io/aspeCQFD/reference/select_infos_context.md)
+  : Selectionne les informations contextuelles pour fiche station
+- [`tab_col_class_ipr()`](https://richaben.github.io/aspeCQFD/reference/tab_col_class_ipr.md)
+  : Ajoute un tableau couleur pour les classes IPR
+
+# Articles
+
+### All vignettes
+
+- [Créer des fiches CQ pour des
+  stations](https://richaben.github.io/aspeCQFD/articles/creation-fiche-cq.md):
+- [Détails de la fiche
+  CQ](https://richaben.github.io/aspeCQFD/articles/details-fiche-cq.md):

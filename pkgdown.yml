@@ -1,10 +1,10 @@
-pandoc: 3.1.11
-pkgdown: 2.1.1
+pandoc: 3.8.3
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   creation-fiche-cq: creation-fiche-cq.html
   details-fiche-cq: details-fiche-cq.html
-last_built: 2025-03-03T10:17Z
+last_built: 2026-11-14T13:44Z
 urls:
   reference: https://richaben.github.io/aspeCQFD/reference
   article: https://richaben.github.io/aspeCQFD/articles

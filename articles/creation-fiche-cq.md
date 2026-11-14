@@ -1,0 +1,168 @@
+# Créer des fiches CQ pour des stations
+
+## Packages nécessaires
+
+``` r
+
+# install.packages("pak") # si nécessaire
+pak::pak(c("pascalirz/aspe",
+           "richaben/aspeCQFD"))
+
+# chargement des packages
+library(aspe) 
+library(aspeCQFD)
+```
+
+## Séquence pour la création de fiches CQ les stations
+
+### 1) Disposer des données ASPE (et les charger)
+
+Une copie de la base de données ASPE sous format `Rdata` est nécessaire,
+devant comprendre l’ensemble des tables et mesures individuelles. Ces
+fichiers `Rdata` sont à créer avec les fonctions dédiées du package
+`aspe` (cf. <https://github.com/PascalIrz/aspe>).
+
+Par exemple (⚠ *chemin vers les données ASPE à adapter selon votre
+arborescence*):
+
+``` r
+
+aspe_tables <-
+  aspe::misc_nom_dernier_fichier(repertoire = "D:/1_database/ASPE/database_aspe/processed_data",
+                                 pattern = "^tables")
+aspe_mei <- 
+  aspe::misc_nom_dernier_fichier(repertoire = "D:/1_database/ASPE/database_aspe/processed_data",
+                                 pattern = "^mei")
+load(aspe_tables)
+load(aspe_mei)
+
+rm(aspe_tables, aspe_mei)
+```
+
+### 2) Constituer les tableaux nécessaires aux fiches
+
+La mise en forme de plusieurs tables de données est nécessaire pour la
+création des fiches CQ stations (contenant les éléments utilisés pour
+les fiches). Ces tables peuvent être créées de façon individuelle
+(cf. ci-dessous) ; mais une fonction du package {aspeCQFD} permet de
+créer en une seule fois l’ensemble des tables nécessaires.
+
+``` r
+
+data_fichesCQ <-
+  mef_creer_ttes_tables_fichesCQ()
+```
+
+La liste des tables individuelles est la suivante :
+
+1.  table de base, avec les informations sur les dates, objectifs de
+    pêches, intervenants, codes sandre, protocole, etc… ;
+2.  table avec les données des opérations ;
+3.  table avec les données sur les peuplements piscicoles ;
+4.  table avec les données ipr des stations ;
+5.  table avec les données des paramètres environnementaux pour calculs
+    de l’ipr ;
+6.  table avec les données sur les probabilités des espèces issues des
+    notes ipr.
+
+Si l’on souhaite créer les tables individuellement, voici comment
+procéder à partir des fonctions du packages :
+
+``` r
+
+### 1/ table de base
+aspe_table_fiches <-
+  mef_creer_table_base_fiches()
+
+### 2/ table avec les données des opérations
+aspe_table_fiches_ope_env <-
+  aspe_table_fiches %>% 
+  mef_creer_table_ope_env() %>% 
+  mef_ajouter_facies()
+
+### 3/ table avec les données poissons
+aspe_table_fiches_peuplement <-
+  aspe_table_fiches %>% 
+  mef_creer_table_peuplement()
+
+### 4/ table avec les données ipr
+aspe_table_fiches_ipr <-
+  aspe_table_fiches_peuplement %>% 
+  dplyr::select(code_sta_pp, 
+                sta_libelle_sandre, 
+                ope_id, 
+                annee, 
+                ope_date,
+                ipr,
+                cli_id,
+                cli_libelle) %>% 
+  dplyr::distinct() %>% 
+  aspe::mef_ajouter_metriques() 
+
+### 5/ table avec les données env. associées à l'ipr
+aspe_table_fiches_ipr_env <-
+  aspe_table_fiches %>% 
+  dplyr::select(code_sta_pp, 
+                sta_libelle_sandre, 
+                ope_id, 
+                annee, 
+                ope_date,
+                pop_id) %>% 
+  dplyr::distinct() %>% 
+  aspe::mef_ajouter_ope_env()
+
+### 6/ table avec les données proba espèces associées à l'ipr
+aspe_table_proba_esp_ipr <-
+  aspe_table_fiches %>%
+  mef_tab_proba_esp_ipr()
+```
+
+## Fonction pour créer une fiche CQ sur une station
+
+La génération des fiches CQ à la station utilise le “code Sandre” suivi
+du code du `point de prélèvement` poisson associé. Par exemple, si l’on
+prend l’exemple de la station [*DIVES A SAINT-SANSON
+1*](https://www.sandre.eaufrance.fr/geo/StationMesureEauxSurface/03231000),
+son “code Sandre” est `03231000` et le “point de prélèvement” poisson
+associé est `013`.
+
+La fonction
+[`generate_fiche_cq_station()`](https://richaben.github.io/aspeCQFD/reference/generate_fiche_cq_station.md)
+permet de générer une ou plusieurs fiches CQ de station(s). Elle permet
+notamment de sélectionner une période de dates voulues pour inspecter
+les données bancarisées sur la station (→ *dans le but de la mise en
+qualité des données* !)
+
+Cette fonction prend en entrée les arguments suivants :
+
+- `stations` : le code Sandre et point de prélèvement de la station (ex.
+  `03231000_013`). Cet argument peut contenir plusieurs stations,
+  combinées dans un vecteur (ex. `c("03231000_013", "03174000_005")`
+  pour 2 stations);
+- `dossier_sortie` : le dossier de sortie sur l’ordinateur à spécifier
+  où seront enregistrées les fiches créées ;
+- `df_data` : un objet contenant les données nécessaires à la création
+  des fiches, créé précédemment avec la fonction
+  [`mef_creer_ttes_tables_fichesCQ()`](https://richaben.github.io/aspeCQFD/reference/mef_creer_ttes_tables_fichesCQ.md)
+  (cf. ci-dessus) ;
+- `auteur` : le nom de l’auteur (ou de la DR) à l’origine de la fiche ;
+- `annee_debut` : l’année de début des données à prendre en compte ;
+- `annee_fin` : l’année de fin des données à prendre en compte ;
+- `interactive` : un argument booléen (`FALSE` ou `TRUE`) pour définir
+  si les graphiques dans les fiches produites seront sous format
+  interactif ou non (ex. pour faciliter la lecture et l’inspection).
+
+> *Exemple: pour générer deux fiches sur deux stations sur la période
+> 2014 à 2022* :
+
+``` r
+
+generate_fiche_cq_station(stations = c("03231000_013", 
+                                       "03174000_005"),
+                          dossier_sortie = "D:/fiches_CQ/",
+                          df_data = data_fichesCQ,
+                          auteur = "Jean Dupont",
+                          annee_debut = 2014,
+                          annee_fin = 2022,
+                          interactive = T)
+```
